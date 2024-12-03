@@ -1,9 +1,11 @@
 .navbar {
+    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 20px;
-    background-color: #343a40;
+    /* background-color: #343a40; */
+    background: rgba(0, 0, 0, 0.8); /* Transparent black background */
     color: #fff;
     font-family: Arial, sans-serif;
   }

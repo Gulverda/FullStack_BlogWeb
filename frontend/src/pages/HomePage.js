@@ -3,7 +3,7 @@ import BlogList from "../components/BlogList";
 
 const HomePage = () => (
   <div>
-    <h1>Welcome to the Blog</h1>
+    {/* <h1>Welcome to the Blog</h1> */}
     <BlogList />
   </div>
 );

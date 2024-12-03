@@ -28,9 +28,12 @@ const BlogList = () => {
         <img src={featuredBlog.image} alt={featuredBlog.title} />
         <div className="hot-topic-details">
           <h2>{featuredBlog.title}</h2>
-          <p>{featuredBlog.content.slice(0, 150)}...</p>
+          <p>{format(new Date(featuredBlog.createdAt), 'yyyy-MM-dd')}, {featuredBlog.author}</p>
           {/* Fixed the href using template literals */}
-          <a href={`/blogs/${featuredBlog._id}`} className="read-more">Read More</a>
+        </div>
+        <div className="text_with_button">
+        <p>{featuredBlog.content.slice(0, 300)}...</p>
+        <a href={`/blogs/${featuredBlog._id}`}>Read More</a>
         </div>
       </div>
 
