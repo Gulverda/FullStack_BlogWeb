@@ -44,7 +44,6 @@ const BlogList = () => {
             <img src={blog.image} alt={blog.title} />
             <h4>{blog.title}</h4>
             <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}</p>
-            {/* Fixed the href using template literals */}
             <a href={`/blogs/${blog._id}`}>Read More</a>
           </div>
         ))}
