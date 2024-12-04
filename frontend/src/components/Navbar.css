@@ -1,61 +1,116 @@
 .navbar {
-    position: fixed;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 20px;
-    /* background-color: #343a40; */
-    background: rgba(0, 0, 0, 0.8); /* Transparent black background */
-    color: #fff;
+    padding: 10px 20px;
+    border-bottom: 2px solid #9c27b0; /* Purple accent */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
   }
   
   .navbar-logo a {
     text-decoration: none;
-    color: #fff;
-    font-size: 24px;
+    color: #000;
+    font-size: 22px;
     font-weight: bold;
   }
   
   .navbar-logo span {
-    color: #007bff;
+    font-style: italic;
+    color: #6a0dad;
   }
   
-  .navbar-links a {
+  .navbar-links {
+    display: flex;
+    align-items: center;
+  }
+  
+  .navbar-links a, .dropdown-toggle {
     text-decoration: none;
-    color: #ddd;
-    margin: 0 10px;
+    color: #555;
+    margin: 0 15px;
     font-weight: 500;
+    transition: color 0.3s ease;
+    cursor: pointer;
   }
   
-  .navbar-links a:hover {
-    color: #007bff;
+  .navbar-links a:hover, .dropdown-toggle:hover {
+    color: #000;
   }
   
-  .navbar {
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  .navbar-donate {
+    margin-left: auto;
   }
   
-
-  /* Global responsiveness */
-@media (max-width: 768px) {
-    .hot-topics {
-      grid-template-columns: 1fr;
-    }
+  .donate-button {
+    background-color: #212529;
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
   
-    .latest-news-grid {
-      grid-template-columns: 1fr;
-    }
+  .donate-button:hover {
+    background-color: #343a40;
+  }
   
+  /* Dropdown Styles */
+  .dropdown {
+    position: relative;
+  }
+  
+  .dropdown-toggle {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: none;
+    flex-direction: column;
+    padding: 10px 0;
+    z-index: 1000;
+  }
+  
+  .dropdown-menu a {
+    padding: 8px 16px;
+    color: #555;
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+  
+  .dropdown-menu a:hover {
+    background-color: #f4f4f4;
+    color: #000;
+  }
+  
+  .dropdown:hover .dropdown-menu {
+    display: flex;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
     .navbar {
       flex-direction: column;
       align-items: flex-start;
     }
   
     .navbar-links {
+      margin: 10px 0;
+    }
+  
+    .navbar-donate {
       margin-top: 10px;
     }
   }

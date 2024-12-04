@@ -1,34 +1,57 @@
 import express from 'express';
 import Blog from '../models/Blog.js';
+
 const router = express.Router();
-// GET /api/blogs route to fetch all blogs
+
+/**
+ * @route   GET /api/blogs
+ * @desc    Fetch all blogs
+ */
 router.get('/', async (req, res) => {
   try {
     const blogs = await Blog.find(); // Fetch all blogs from the database
-    res.json(blogs); // Return the blogs as a JSON response
+    res.json(blogs); // Return blogs as JSON
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching blogs', error: error.message });
+    res.status(500).json({
+      message: 'Error fetching blogs',
+      error: error.message,
+    });
   }
 });
-// GET /api/blogs/:id route to fetch a single blog by ID
+
+/**
+ * @route   GET /api/blogs/:id
+ * @desc    Fetch a single blog by ID
+ */
 router.get('/:id', async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id); // Find blog by ID
     if (!blog) {
       return res.status(404).json({ message: 'Blog not found' });
     }
-    res.json(blog); // Return the blog data
+    res.json(blog); // Return blog data
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: 'Error fetching blog details', error: error.message });
+    res.status(500).json({
+      message: 'Error fetching blog details',
+      error: error.message,
+    });
   }
 });
-// POST /api/blogs route to create a new blog
+
+/**
+ * @route   POST /api/blogs
+ * @desc    Create a new blog
+ */
 router.post('/', async (req, res) => {
-  const { title, content, author, tags, image } = req.body;
-  if (!title || !content || !author) {
-    return res.status(400).json({ message: 'Title, content, and author are required' });
+  const { title, content, author, tags, image, category } = req.body;
+
+  // Validate required fields
+  if (!title || !content || !author || !category) {
+    return res.status(400).json({
+      message: 'Title, content, author, and category are required',
+    });
   }
+
   try {
     const newBlog = new Blog({
       title,
@@ -36,11 +59,36 @@ router.post('/', async (req, res) => {
       author,
       tags,
       image,
+      category,
     });
+
     const savedBlog = await newBlog.save();
     res.status(201).json(savedBlog);
-  } catch (err) {
-    res.status(500).json({ message: 'Error creating blog', error: err.message });
+  } catch (error) {
+    res.status(500).json({
+      message: 'Error creating blog',
+      error: error.message,
+    });
   }
 });
+
+/**
+ * @route   GET /api/blogs/category/:category
+ * @desc    Fetch blogs by category
+ */
+router.get("/category/:category", async (req, res) => {
+    const { category } = req.params;
+    try {
+      const blogs = await Blog.find({ category: category });
+      if (blogs.length === 0) {
+        return res.status(404).json({ message: "This category list is empty" });
+      }
+      res.json(blogs);
+    } catch (error) {
+      console.error("Error fetching blogs by category:", error);
+      res.status(500).json({ message: "Server error" });
+    }
+  });
+  
+
 export default router;
