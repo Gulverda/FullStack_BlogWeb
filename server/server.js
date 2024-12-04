@@ -40,7 +40,7 @@ app.get("/", (req, res) => {
     },
   });
 });
-
+  
 // 404 Handler
 app.use((req, res) => {
   res.status(404).json({ message: "Route not found" });
@@ -54,6 +54,23 @@ app.use((err, req, res, next) => {
     stack: process.env.NODE_ENV === "production" ? null : err.stack,
   });
 });
+
+// In your Express route
+// Example for Express.js
+app.get('/api/blogs/:tag', async (req, res) => {
+    const { tag } = req.params; // Get the tag from the URL parameter
+    
+    try {
+        const filteredPosts = await Blog.find({ tags: tag }); // Assuming your schema has a `tags` field
+        res.json(filteredPosts);
+    } catch (error) {
+        console.error("Error fetching posts by tag:", error); // Log the error for debugging
+        res.status(500).json({ message: 'Internal Server Error' }); // Send a 500 error if something goes wrong
+    }
+});
+
+
+  
 
 // Start Server
 const PORT = process.env.PORT || 5000;

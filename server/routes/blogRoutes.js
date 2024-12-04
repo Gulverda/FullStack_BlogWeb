@@ -77,15 +77,39 @@ router.post('/', async (req, res) => {
  * @desc    Fetch blogs by category
  */
 router.get("/category/:category", async (req, res) => {
-    const { category } = req.params;
+  const { category } = req.params;
+  try {
+    const blogs = await Blog.find({ category: category });
+    if (blogs.length === 0) {
+      return res.status(404).json({ message: "This category list is empty" });
+    }
+    res.json(blogs);
+  } catch (error) {
+    console.error("Error fetching blogs by category:", error);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+
+/**
+ * @route   GET /api/blogs/tag/:tag
+ * @desc    Fetch blogs by tag
+ */
+router.get("/tag/:tag", async (req, res) => {
+    const { tag } = req.params; // Get the tag from URL parameter
     try {
-      const blogs = await Blog.find({ category: category });
+      // Find blogs that contain the tag in the tags array
+      const blogs = await Blog.find({ tags: tag });
+      
+      // If no blogs are found with the given tag
       if (blogs.length === 0) {
-        return res.status(404).json({ message: "This category list is empty" });
+        return res.status(404).json({ message: `No blogs found with tag: ${tag}` });
       }
+      
+      // Return the filtered blogs
       res.json(blogs);
     } catch (error) {
-      console.error("Error fetching blogs by category:", error);
+      console.error("Error fetching blogs by tag:", error);
       res.status(500).json({ message: "Server error" });
     }
   });
