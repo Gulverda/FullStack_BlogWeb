@@ -15,17 +15,17 @@ export const fetchBlogById = async (id) => {
 
 // Fetch all posts by a specific tag
 export const fetchPostsByTag = async (tag) => {
-    try {
-      // URL encode the tag in case it has spaces or special characters
-      const encodedTag = encodeURIComponent(tag);
-      const response = await axios.get(`http://localhost:5000/api/blogs/tag/${encodedTag}`);
-      return response.data; // Return the filtered posts
-    } catch (error) {
-      console.error('Error fetching posts by tag:', error);
-      throw error; // Handle error in the component
-    }
-  };
-  
+  try {
+    // URL encode the tag in case it has spaces or special characters
+    const encodedTag = encodeURIComponent(tag);
+    const response = await axios.get(`http://localhost:5000/api/blogs/tag/${encodedTag}`);
+    return response.data; // Return the filtered posts
+  } catch (error) {
+    console.error('Error fetching posts by tag:', error);
+    throw error; // Handle error in the component
+  }
+};
+
 
 export const createBlog = async (blogData) => {
   const response = await axios.post(`${API_URL}/blogs`, blogData);

@@ -19,27 +19,33 @@ const BlogList = () => {
   if (loading) return <p>Loading blogs...</p>; // Show loading message while data is being fetched
   if (blogs.length === 0) return <p>No blogs found.</p>; // If no blogs found, show this message
 
-  const featuredBlog = blogs[0]; // First blog as featured
-  const latestBlogs = blogs.slice(1); // Remaining blogs for "Latest News"
+  // Sort blogs by createdAt in descending order (newest first)
+  const sortedBlogs = blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  // Show the first 4 blogs for Hot Topics
+  const hotTopics = sortedBlogs.slice(0, 4); 
 
   return (
     <div className="blog-list">
-      <div className="hot-topics">
-        <img src={featuredBlog.image} alt={featuredBlog.title} />
-        <div className="hot-topic-details">
-          <h2>{featuredBlog.title}</h2>
-          <p>{format(new Date(featuredBlog.createdAt), 'yyyy-MM-dd')}, {featuredBlog.author}</p>
-          {/* Fixed the href using template literals */}
-        </div>
-        <div className="text_with_button">
-        <p>{featuredBlog.content.slice(0, 300)}...</p>
-        <a href={`/blogs/${featuredBlog._id}`}>Read More</a>
-        </div>
+      <h3 className="section-title">Hot Topics</h3>
+      <div className="hot-topics-grid">
+        {hotTopics.map((blog) => (
+          <div key={blog._id} className="hot-topic">
+            <span>{blog.category}</span>
+            <img src={blog.image} alt={blog.title} className="hot-topic-image" />
+            <div className="hot-topic-details">
+              <h2>{blog.title}</h2>
+              <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}, {blog.author}</p>
+              <p>{blog.content.slice(0, 150)}...</p>
+              <a href={`/blogs/${blog._id}`} className="read-more-link">Read More</a>
+            </div>
+          </div>
+        ))}
       </div>
 
       <h3 className="section-title">Latest News</h3>
       <div className="latest-news-grid">
-        {latestBlogs.map((blog) => (
+        {sortedBlogs.slice(4).map((blog) => (
           <div key={blog._id} className="news-card">
             <img src={blog.image} alt={blog.title} />
             <h4>{blog.title}</h4>
