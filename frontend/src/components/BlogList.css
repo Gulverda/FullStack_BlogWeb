@@ -117,14 +117,14 @@
   /* Latest News Grid */
   .latest-news-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 columns for Latest News */
+    grid-template-columns: repeat(4, 1fr);
     gap: 1rem;
     padding-top: 2rem;
   }
   
   .news-card {
     background-color: #fff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     /* border-radius: 8px; */
     overflow: hidden;
     transition: transform 0.3s ease;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchBlogs } from "../api/blogs";
-import { format } from 'date-fns';
-import './BlogList.css';
+import { format } from "date-fns";
+import "./BlogList.css";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -23,7 +23,13 @@ const BlogList = () => {
   const sortedBlogs = blogs.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
 
   // Show the first 4 blogs for Hot Topics
-  const hotTopics = sortedBlogs.slice(0, 4); 
+  const hotTopics = sortedBlogs.slice(0, 4);
+
+  // Helper function to extract preview text from the content array
+  const getPreviewText = (contentArray) => {
+    // Concatenate all text fields in the content array and return the first 150 characters
+    return contentArray.map((item) => item.text).join(" ").slice(0, 150);
+  };
 
   return (
     <div className="blog-list">
@@ -35,9 +41,13 @@ const BlogList = () => {
             <img src={blog.image} alt={blog.title} className="hot-topic-image" />
             <div className="hot-topic-details">
               <h2>{blog.title}</h2>
-              <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}, {blog.author}</p>
-              <p>{blog.content.slice(0, 150)}...</p>
-              <a href={`/blogs/${blog._id}`} className="read-more-link">Read More</a>
+              <p>
+                {format(new Date(blog.createdAt), "yyyy-MM-dd")}, {blog.author}
+              </p>
+              <p>{getPreviewText(blog.content)}...</p>
+              <a href={`/blogs/${blog._id}`} className="read-more-link">
+                Read More
+              </a>
             </div>
           </div>
         ))}
@@ -49,7 +59,7 @@ const BlogList = () => {
           <div key={blog._id} className="news-card">
             <img src={blog.image} alt={blog.title} />
             <h4>{blog.title}</h4>
-            <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}</p>
+            <p>{format(new Date(blog.createdAt), "yyyy-MM-dd")}</p>
             <a href={`/blogs/${blog._id}`}>Read More</a>
           </div>
         ))}

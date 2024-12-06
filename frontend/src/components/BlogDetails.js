@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom"; // Import Link from react-router-dom
+import { useParams, Link } from "react-router-dom"; 
 import { fetchBlogById } from "../api/blogs";
 import './BlogDetails.css';
 
@@ -9,30 +9,57 @@ const BlogDetails = () => {
 
   useEffect(() => {
     const getBlog = async () => {
-      const data = await fetchBlogById(id);
-      setBlog(data);
+      try {
+        const data = await fetchBlogById(id);
+        if (data) {
+          setBlog(data);
+        }
+      } catch (error) {
+        console.error('Error fetching blog:', error);
+      }
     };
     getBlog();
   }, [id]);
 
-  if (!blog) return <p>Loading...</p>;
+  if (!blog) return <p>Loading...</p>; // Show loading text if blog data is not fetched yet
+
+  const { title, content, author, image, tags } = blog;
 
   return (
     <div className="blog-details">
-      <h1>{blog.title}</h1>
-      <img src={blog.image} alt={blog.title} />
-      <p>{blog.content}</p>
+      <h1>{title}</h1>
+      {image && <img src={image} alt={title} />} {/* Show main image if available */}
+      
+      {/* Loop through the content array and display each block */}
+      {content && content.length > 0 ? (
+        content.map((contentBlock, index) => (
+          <div key={index} className="content-block">
+            {/* Render title if it exists */}
+            {contentBlock.title && <h2>{contentBlock.title}</h2>} {/* Section title */}
+            {/* Render content text (paragraphs) */}
+            {contentBlock.text && <p>{contentBlock.text}</p>} {/* Paragraph text */}
+            {/* Render content image if available */}
+            {contentBlock.image && <img src={contentBlock.image} alt={`content-${index}`} />} 
+          </div>
+        ))
+      ) : (
+        <p>Content is missing</p> // Fallback message if no content
+      )}
+
       <div className="author">
-        <p><strong>Author:</strong> {blog.author}</p>
+        <p><strong>Author:</strong> {author}</p>
       </div>
-      <div className="tags">
-        <p><strong>Tags:</strong></p>
-        {blog.tags.map((tag, index) => (
-          <Link key={index} to={`/tag/${tag}`} className="tag-link">
-            {tag}
-          </Link>
-        ))}
-      </div>
+
+      {tags && tags.length > 0 && (
+        <div className="tags">
+          <p><strong>Tags:</strong></p>
+          {tags.map((tag, index) => (
+            <Link key={index} to={`/tag/${tag}`} className="tag-link">
+              {tag}
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

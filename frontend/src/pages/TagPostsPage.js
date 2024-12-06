@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // Hook to get URL params
 import { fetchPostsByTag } from '../api/blogs'; // Function to fetch posts by tag
 import { format } from 'date-fns'; // Library to format dates
 import './TagPostsPage.css';
+import '../components/BlogList.css';
 
 const TagPosts = () => {
   const [posts, setPosts] = useState([]); // State to store posts

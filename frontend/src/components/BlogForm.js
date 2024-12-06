@@ -4,7 +4,7 @@ import axios from 'axios';
 const BlogForm = () => {
   const [blog, setBlog] = useState({
     title: '',
-    content: '',
+    content: [{ title: '', text: '', image: '' }], // Added title to content blocks
     author: '',
     tags: '',
     image: '',
@@ -18,19 +18,30 @@ const BlogForm = () => {
     });
   };
 
+  const handleContentChange = (index, field, value) => {
+    const updatedContent = [...blog.content];
+    updatedContent[index][field] = value;
+    setBlog({
+      ...blog,
+      content: updatedContent,
+    });
+  };
+
+  const addContentBlock = () => {
+    setBlog({
+      ...blog,
+      content: [...blog.content, { title: '', text: '', image: '' }],
+    });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Convert tags into an array
     const tagsArray = blog.tags.split(',').map((tag) => tag.trim());
 
     const newBlog = {
-      title: blog.title,
-      content: blog.content,
-      author: blog.author,
+      ...blog,
       tags: tagsArray,
-      image: blog.image,
-      category: blog.category,
     };
 
     try {
@@ -40,11 +51,11 @@ const BlogForm = () => {
       // Reset form fields
       setBlog({
         title: '',
-        content: '',
+        content: [{ title: '', text: '', image: '' }],
         author: '',
         tags: '',
         image: '',
-        category: '', 
+        category: '',
       });
     } catch (error) {
       console.error('Error creating blog:', error);
@@ -65,13 +76,44 @@ const BlogForm = () => {
         />
       </div>
       <div>
-        <label>Content:</label>
-        <textarea
-          name="content"
-          value={blog.content}
-          onChange={handleChange}
-          required
-        />
+        <label>Content Blocks:</label>
+        {blog.content.map((block, index) => (
+          <div key={index} style={{ marginBottom: '20px' }}>
+            <div>
+              <label>Content Title:</label>
+              <input
+                type="text"
+                value={block.title}
+                onChange={(e) =>
+                  handleContentChange(index, 'title', e.target.value)
+                }
+              />
+            </div>
+            <div>
+              <label>Text:</label>
+              <textarea
+                value={block.text}
+                onChange={(e) =>
+                  handleContentChange(index, 'text', e.target.value)
+                }
+                required
+              />
+            </div>
+            <div>
+              <label>Image URL:</label>
+              <input
+                type="text"
+                value={block.image}
+                onChange={(e) =>
+                  handleContentChange(index, 'image', e.target.value)
+                }
+              />
+            </div>
+          </div>
+        ))}
+        <button type="button" onClick={addContentBlock}>
+          Add Content Block
+        </button>
       </div>
       <div>
         <label>Author:</label>
