@@ -4,9 +4,10 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
 import BlogDetails from "./components/BlogDetails";
+import Blogs from "./pages/Blogs";
 import NotFoundPage from "./pages/NotFoundPage";
 import CategoryPage from "./pages/CategoryPage"; 
-import TagPosts from "./pages/TagPostsPage"; 
+import TagPosts from "./pages/TagPostsPage";
 
 const App = () => (
   <Router>
@@ -14,6 +15,7 @@ const App = () => (
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/admin" element={<AdminPage />} />
+      <Route path="/blogs" element={<Blogs />} />
       <Route path="/blogs/:id" element={<BlogDetails />} />
       <Route path="/categories/:category" element={<CategoryPage />} />
       <Route path="/tag/:tag" element={<TagPosts/>} />
