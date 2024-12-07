@@ -25,11 +25,19 @@ const BlogList = () => {
   // Show the first 4 blogs for Hot Topics
   const hotTopics = sortedBlogs.slice(0, 4);
 
-  // Helper function to extract preview text from the content array
+
   const getPreviewText = (contentArray) => {
-    // Concatenate all text fields in the content array and return the first 150 characters
-    return contentArray.map((item) => item.text).join(" ").slice(0, 150);
+    if (!Array.isArray(contentArray)) return "No content available";
+  
+    // Combine all text fields from the content array
+    const combinedText = contentArray.map((item) => item.text).join(" ");
+  
+    // Truncate to 100-120 characters and add ellipsis
+    return combinedText.length > 120
+      ? combinedText.slice(0, 120) + "..."
+      : combinedText;
   };
+  
 
   return (
     <div className="blog-list">
@@ -58,8 +66,9 @@ const BlogList = () => {
         {sortedBlogs.slice(4).map((blog) => (
           <div key={blog._id} className="news-card">
             <img src={blog.image} alt={blog.title} />
-            <h4>{blog.title}</h4>
             <p>{format(new Date(blog.createdAt), "yyyy-MM-dd")}</p>
+            <h4>{blog.title}</h4>
+            <p>{getPreviewText(blog.content)}</p>
             <a href={`/blogs/${blog._id}`}>Read More</a>
           </div>
         ))}

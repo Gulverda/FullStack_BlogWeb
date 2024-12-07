@@ -3,11 +3,11 @@
     max-width: 900px;
     margin: 40px auto;
     padding: 20px;
-    background-color: #fff;
+    /* background-color: #fff;
     border: 1px solid #eaeaea;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; */
   }
   
   .blog-details h1 {
@@ -22,7 +22,7 @@
     height: auto;
     border-radius: 10px;
     margin-bottom: 20px;
-    object-fit: cover;
+    object-fit: contain;
     max-height: 450px;
   }
   
