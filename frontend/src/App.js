@@ -8,6 +8,7 @@ import Blogs from "./pages/Blogs";
 import NotFoundPage from "./pages/NotFoundPage";
 import CategoryPage from "./pages/CategoryPage"; 
 import TagPosts from "./pages/TagPostsPage";
+import Footer from "./components/Footer/Footer";
 
 const App = () => (
   <Router>
@@ -21,6 +22,7 @@ const App = () => (
       <Route path="/tag/:tag" element={<TagPosts/>} />
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
+    <Footer />
   </Router>
 );
 

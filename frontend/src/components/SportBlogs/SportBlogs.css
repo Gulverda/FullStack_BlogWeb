@@ -24,9 +24,10 @@
   }
   
   .featured-blog-details {
+    width: 100%;
     position: absolute;
-    bottom: 20px;
-    left: 20px;
+    bottom: 5px;
+    left: 0px;
     color: white;
     background: rgba(0, 0, 0, 0.6);
     padding: 10px;
