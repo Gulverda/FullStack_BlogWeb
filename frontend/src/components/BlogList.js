@@ -3,80 +3,99 @@ import { fetchBlogs } from "../api/blogs";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import "./BlogList.css";
+import SportBlogs from "./SportBlogs/SportBlogs";
+import ScienceBlogs from "./ScienceBlogs";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  // Fetch and sort blogs
   useEffect(() => {
     const getBlogs = async () => {
-      const data = await fetchBlogs(); // Fetch the blogs
-      // Sort blogs by createdAt in descending order (newest first)
-      const sortedBlogs = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-      setBlogs(sortedBlogs); // Update the blogs state with sorted blogs
-      setLoading(false); // Set loading to false once the data is fetched
+      try {
+        const data = await fetchBlogs();
+        const sortedBlogs = data.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        setBlogs(sortedBlogs);
+      } catch (error) {
+        console.error("Error fetching blogs:", error);
+      } finally {
+        setLoading(false);
+      }
     };
-    getBlogs(); // Call the function to fetch blogs
+
+    getBlogs();
   }, []);
 
-  if (loading) return <p>Loading blogs...</p>; // Show loading message while data is being fetched
-  if (blogs.length === 0) return <p>No blogs found.</p>; // If no blogs found, show this message
+  // Loading and empty state handling
+  if (loading) return <p>Loading blogs...</p>;
+  if (blogs.length === 0) return <p>No blogs found.</p>;
 
-  // Show the first 4 blogs for Hot Topics
-  const hotTopics = blogs.slice(0, 4);
-
-  // Show the first 8 blogs for Latest News
+  // Filtered and sliced blogs for different sections
+  const hotTopics = blogs.filter((blog) => blog.tags.includes("hot-topic")).slice(0, 4);
   const latestNews = blogs.slice(0, 8);
 
+  // Helper function to truncate blog content
   const getPreviewText = (contentArray) => {
     if (!Array.isArray(contentArray)) return "No content available";
-
-    // Combine all text fields from the content array
     const combinedText = contentArray.map((item) => item.text).join(" ");
-
-    // Truncate to 100-120 characters and add ellipsis
-    return combinedText.length > 120 ? combinedText.slice(0, 120) + "..." : combinedText;
+    return combinedText.length > 120 ? `${combinedText.slice(0, 120)}...` : combinedText;
   };
 
   return (
     <div className="blog-list">
-      {/* Hot Topics */}
-      <h3 className="section-title">Hot Topics</h3>
-      <div className="hot-topics-grid">
-        {hotTopics.map((blog) => (
-          <div key={blog._id} className="hot-topic">
-            <span>{blog.category}</span>
-            <img src={blog.image} alt={blog.title} className="hot-topic-image" />
-            <div className="hot-topic-details">
-              <h2>{blog.title}</h2>
-              <p>
-                {format(new Date(blog.createdAt), "yyyy-MM-dd")}, {blog.author}
-              </p>
-              <p>{getPreviewText(blog.content)}...</p>
-              <Link to={`/blogs/${blog._id}`} className="read-more-link">
-                Read More
+      {/* Hot Topics Section */}
+      <section className="hot-topics">
+        <h1 className="section-title">Hot Topics</h1>
+        <div className="hot-topics-grid">
+          {hotTopics.map((blog) => (
+            <div key={blog._id} className="hot-topic">
+              <Link to={`/blogs/${blog._id}`} className="hot-topic-link">
+                <span className="hot-topic-category">{blog.category}</span>
+                <img src={blog.image} alt={blog.title} className="hot-topic-image" />
+                <div className="hot-topic-details">
+                  <h2>{blog.title}</h2>
+                  <p>
+                    {format(new Date(blog.createdAt), "yyyy-MM-dd")}, {blog.author}
+                  </p>
+                  <p>{getPreviewText(blog.content)}</p>
+                </div>
               </Link>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      </section>
 
-      {/* Latest News */}
-      <h3 className="section-title">Latest News</h3>
-      <div className="latest-news-grid">
-        {latestNews.map((blog) => (
-          <div key={blog._id} className="news-card">
-            <img src={blog.image} alt={blog.title} />
-            <p>{format(new Date(blog.createdAt), "yyyy-MM-dd")}</p>
-            <h4>{blog.title}</h4>
-            <p>{getPreviewText(blog.content)}</p>
-            <Link to={`/blogs/${blog._id}`}>Read More</Link>
-          </div>
-        ))}
-      </div>
+      {/* Latest News Section */}
+      <section className="latest-news">
+        <div className="latest-news-header">
+        <h1 className="section-title">Latest News</h1>
+        <Link to="/blogs" className="view-all-btn">
+          View All
+        </Link>
+        </div>
+        <div className="latest-news-grid">
+          {latestNews.map((blog) => (
+            <div key={blog._id} className="news-card">
+              <img src={blog.image} alt={blog.title} className="news-card-image" />
+              <div className="news-card-details">
+                <p className="news-card-date">{format(new Date(blog.createdAt), "yyyy-MM-dd")}</p>
+                <h4 className="news-card-title">{blog.title}</h4>
+                <p>{getPreviewText(blog.content)}</p>
+                <Link to={`/blogs/${blog._id}`} className="read-more-link">
+                  Read More
+                </Link>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
 
-      {/* View All Button */}
-      <Link to="/blogs" className="view-all-btn">View All</Link>
+      {/* Sports and Science News Section */}
+      <section className="sports-science-news">
+        <SportBlogs />
+        <ScienceBlogs />
+      </section>
     </div>
   );
 };

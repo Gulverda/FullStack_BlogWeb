@@ -5,12 +5,25 @@
   
   /* Section titles */
   .section-title {
+    width: 100%;
     font-size: 24px;
     font-weight: bold;
     margin-bottom: 1rem;
     text-transform: uppercase;
     color: #333;
     letter-spacing: 1px;
+  }
+
+  .latest-news-header{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .latest-news-header a{
+    position: absolute;
+    right: 30px;
+    margin-top: 30px;
+    color: #333;
   }
   
   /* Hot Topics Grid */
@@ -160,6 +173,25 @@
     margin: 10px;
     display: inline-block;
   }
+
+  .sports-science-news {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Two columns for larger screens */
+    gap: 20px;
+  }
+  
+  /* For smaller screens, stack the items vertically */
+  @media screen and (max-width: 768px) {
+    .sports-science-news {
+      grid-template-columns: 1fr; /* Single column layout */
+      gap: 15px;
+    }
+
+    .hot-topic-details p{
+        display: none;
+    }
+  }
+  
 
   @media (max-width: 1024px) {
     .latest-news-grid {

@@ -1,0 +1,96 @@
+/* General container for the blogs section */
+*{
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+.blog-grid-science{
+  display: grid;
+  gap: 20px;
+}
+
+/* Heading for the blog section */
+.blogs-container h1 {
+  font-size: 1.5rem;
+  margin-bottom: 30px;
+  color: #333;
+  font-weight: bold;
+}
+
+/* Grid layout for the blog cards */
+.blog-grid {
+  display: grid;
+  gap: 20px;
+  padding: 0;
+}
+
+/* Individual blog card */
+.blog-card-science {
+  display: flex;
+  background-color: white;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+  padding: 15px;
+}
+
+/* Hover effect for blog card */
+.blog-card:hover {
+  transform: translateY(-5px);
+}
+
+/* Image styling */
+.blog-card-image {
+  width: 100%;
+  max-width: 120px;
+  object-fit: cover;
+  /* border-radius: 8px; */
+}
+
+/* Styling for the blog details (title, date, summary) */
+.blog-card-details {
+  padding: 20px;
+  /* margin-top: 15px; */
+}
+
+.blog-card-details h2 {
+  font-size: 18px;
+  font-weight: 300;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.blog-card-details p {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.blog-card-details .date {
+  font-size: 0.9rem;
+  color: #999;
+  margin-bottom: 10px;
+}
+
+@media (max-width: 1024px) {
+  .blog-card-science img {
+    display: none;
+  }
+
+  .blog-card-details h2{
+    font-weight: 600;
+  }
+}
+
+@media (max-width: 768px) {
+  .blog-card-science img {
+    display: block;
+  }
+}
+
+@media (max-width: 480px) {
+  .blog-card-science img {
+    display: none;
+  }
+}
