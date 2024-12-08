@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; 
 import { fetchBlogs } from "../api/blogs";
 import { format } from "date-fns";
-// import './Blogs.css';
+import './BlogsPage.css';
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);

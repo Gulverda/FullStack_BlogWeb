@@ -4,7 +4,7 @@ import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
 import AdminPage from "./pages/AdminPage";
 import BlogDetails from "./components/BlogDetails";
-import Blogs from "./pages/Blogs";
+import Blogs from "./pages/BlogsPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import CategoryPage from "./pages/CategoryPage"; 
 import TagPosts from "./pages/TagPostsPage";
