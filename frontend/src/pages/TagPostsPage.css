@@ -1,4 +1,9 @@
+.tag-posts{
+  padding: 20px;
+}
+
 .posts-list {
+  padding-top: 20px;
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
     gap: 20px;

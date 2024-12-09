@@ -54,16 +54,19 @@ export const fetchRelatedBlogs = async (tags, currentBlogId) => {
 
     // Parse the response JSON
     const data = await response.json();
-    console.log('Related blogs fetched:', data); // Debugging log
+    
+    // console.log('Related blogs fetched:', data); // Debugging log
 
     // Filter out blogs that do not share any tags or the current blog
     return data.filter((blog) => 
       blog._id !== currentBlogId && 
       blog.tags.some(tag => tags.includes(tag)) // Only include blogs with matching tags
     );
+    
   } catch (error) {
     // Log any errors that occur during the fetch
     console.error("Error fetching related blogs:", error);
     return [];
   }
+  
 };

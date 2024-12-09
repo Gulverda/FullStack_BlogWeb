@@ -94,9 +94,9 @@ const BlogDetails = () => {
               <div className="news-card-details">
                 <p className="news-card-date">{format(new Date(relatedBlog.createdAt), "yyyy-MM-dd")}</p>
                 <h4 className="news-card-title">{relatedBlog.title}</h4>
-                <Link to={`/blogs/${relatedBlog._id}`} className="read-more-link">
+                {/* <Link to={`/blogs/${relatedBlog._id}`} className="read-more-link">
                   Read More
-                </Link>
+                </Link> */}
               </div>
                 </Link>
               </li>

@@ -4,7 +4,8 @@
     justify-content: space-between;
     align-items: center;
     padding: 10px 20px;
-    border-bottom: 2px solid #9c27b0;
+    /* border-bottom: 2px solid #9c27b0; */
+    border-bottom: 2px solid #1416e4;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     font-family: Arial, sans-serif;
     position: relative;
@@ -20,7 +21,7 @@
 
 .navbar-logo span {
     font-style: italic;
-    color: #6a0dad;
+    color: #1416e4;
 }
 
 /* Navbar links container */

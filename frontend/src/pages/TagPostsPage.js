@@ -16,7 +16,7 @@ const TagPosts = () => {
       try {
         // Fetch posts by the tag from the API
         const data = await fetchPostsByTag(tag);
-        console.log(data); // Check the fetched data
+        // console.log(data); // Check the fetched data
         setPosts(data); // Update state with fetched posts
         setLoading(false); // Set loading to false when data is fetched
       } catch (error) {
