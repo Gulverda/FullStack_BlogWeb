@@ -35,7 +35,7 @@ const Blogs = () => {
           <img src={blog.image} alt={blog.title} />
           <p>{format(new Date(blog.createdAt), "yyyy-MM-dd")}</p>
           <h4>{blog.title}</h4>
-          <Link href={`/blogs/${blog._id}`}>Read More</Link>
+          <Link to={`/blogs/${blog._id}`}>Read More</Link>
         </div>
         ))}
       </div>

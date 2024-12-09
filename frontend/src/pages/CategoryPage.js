@@ -28,7 +28,7 @@ const CategoryPage = () => {
   }, [category]);
 
   return (
-    <div>
+    <div className="category" style={{padding: "20px"}}>
       <h1>Category: {category.charAt(0).toUpperCase() + category.slice(1)}</h1>
       {error ? (
         <p>{error}</p> // Display error message
