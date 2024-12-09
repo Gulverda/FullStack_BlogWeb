@@ -18,7 +18,7 @@ export const fetchPostsByTag = async (tag) => {
   try {
     // URL encode the tag in case it has spaces or special characters
     const encodedTag = encodeURIComponent(tag);
-    const response = await axios.get(`http://localhost:5000/api/blogs/tag/${encodedTag}`);
+    const response = await axios.get(`${API_URL}/blogs/tag/${encodedTag}`);
     return response.data; // Return the filtered posts
   } catch (error) {
     console.error('Error fetching posts by tag:', error);
@@ -40,4 +40,30 @@ export const updateBlog = async (id, blogData) => {
 export const deleteBlog = async (id) => {
   const response = await axios.delete(`${API_URL}/blogs/${id}`);
   return response.data;
+};
+
+export const fetchRelatedBlogs = async (tags, currentBlogId) => {
+  try {
+    // Construct the query URL with tags and exclude the current blog ID
+    const response = await fetch(`${API_URL}/blogs?tags=${tags.join(",")}&blogId=${currentBlogId}`);
+    
+    // Check if the response is OK
+    if (!response.ok) {
+      throw new Error(`Error: ${response.status} - ${response.statusText}`);
+    }
+
+    // Parse the response JSON
+    const data = await response.json();
+    console.log('Related blogs fetched:', data); // Debugging log
+
+    // Filter out blogs that do not share any tags or the current blog
+    return data.filter((blog) => 
+      blog._id !== currentBlogId && 
+      blog.tags.some(tag => tags.includes(tag)) // Only include blogs with matching tags
+    );
+  } catch (error) {
+    // Log any errors that occur during the fetch
+    console.error("Error fetching related blogs:", error);
+    return [];
+  }
 };

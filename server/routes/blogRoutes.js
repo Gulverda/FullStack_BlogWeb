@@ -113,6 +113,30 @@ router.get("/tag/:tag", async (req, res) => {
       res.status(500).json({ message: "Server error" });
     }
   });
+
+
+  // Fetch related blogs based on tags
+router.get('/blogs', async (req, res) => {
+  try {
+    const { tags } = req.query;
+    if (!tags) {
+      return res.status(400).json({ error: 'Tags are required' });
+    }
+
+    // Convert the tags query string to an array
+    const tagArray = tags.split(',');
+
+    // Find blogs that have any of the tags in common with the current blog
+    const relatedBlogs = await Blog.find({
+      tags: { $in: tagArray },
+    }).limit(5); // Limit the number of related blogs (optional)
+
+    return res.json(relatedBlogs);
+  } catch (error) {
+    console.error('Error fetching related blogs:', error);
+    return res.status(500).json({ error: 'Server error' });
+  }
+});
   
 
 export default router;

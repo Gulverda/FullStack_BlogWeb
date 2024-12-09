@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom"; 
 import { fetchBlogById } from "../api/blogs";
+import { fetchRelatedBlogs } from "../api/blogs"; // Assuming this is where fetchRelatedBlogs is imported
 import './BlogDetails.css';
 
 const BlogDetails = () => {
@@ -8,6 +9,7 @@ const BlogDetails = () => {
   const [blog, setBlog] = useState(null);
   const [loading, setLoading] = useState(true); // Track loading state
   const [error, setError] = useState(null); // Track errors
+  const [relatedBlogs, setRelatedBlogs] = useState([]); // State for related blogs
 
   useEffect(() => {
     const getBlog = async () => {
@@ -15,6 +17,9 @@ const BlogDetails = () => {
         const data = await fetchBlogById(id);
         if (data) {
           setBlog(data);
+          // After blog is fetched, fetch related blogs
+          const related = await fetchRelatedBlogs(data.tags, id);
+          setRelatedBlogs(related);
         } else {
           setError("Blog not found");
         }
@@ -24,9 +29,10 @@ const BlogDetails = () => {
         setLoading(false); // Stop loading after fetch attempt
       }
     };
-
+  
     getBlog();
   }, [id]);
+  
 
   if (loading) return <div className="loading-spinner">Loading...</div>; // Example spinner
   if (error) return <p>{error}</p>;
@@ -73,6 +79,20 @@ const BlogDetails = () => {
               {tag}
             </Link>
           ))}
+        </div>
+      )}
+
+      {/* Render related blogs */}
+      {relatedBlogs.length > 0 && (
+        <div className="related-blogs">
+          <h3>Related Blogs:</h3>
+          <ul>
+            {relatedBlogs.map((relatedBlog) => (
+              <li key={relatedBlog._id}>
+                <Link to={`/blog/${relatedBlog._id}`}>{relatedBlog.title}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
     </div>
