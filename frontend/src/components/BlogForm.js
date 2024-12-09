@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import './BlogForm.css';
 
 const BlogForm = () => {
   const [blog, setBlog] = useState({
