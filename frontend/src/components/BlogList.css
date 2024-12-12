@@ -184,6 +184,64 @@
     grid-template-columns: 1fr 1fr; /* Two columns for larger screens */
     gap: 20px;
   }
+
+  .admin-page-header{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .admin-page{
+    padding: 20px;
+  }
+
+  .admin_buttons{
+    display: flex;
+    gap: 10px;
+  }
+
+  .admin_page_button{
+    color: #fff;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+  }
+
+  .admin_page_button.edit{
+    background-color: #6c63ff;
+  }
+
+  .admin_page_button.delete{
+    background-color: #ff6348;
+  }
+
+  .admin-page-header {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  
+  .admin-page-header h2 {
+    margin: 0;
+  }
+  
+  .admin-page-header button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+  }
   
   /* For smaller screens, stack the items vertically */
   @media screen and (max-width: 768px) {
