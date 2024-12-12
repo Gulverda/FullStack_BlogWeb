@@ -92,11 +92,16 @@
     z-index: 2;
   }
   
-  .hot-topic-details h2 {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
+.hot-topic-details h2 {
+  font-size: clamp(1rem, 2vw, 1.5rem); /* Minimum: 1rem, Preferred: 2vw, Maximum: 1.5rem */
+  font-weight: bold;
+  margin-bottom: 5px;
+  line-height: 1.2;
+  text-overflow: ellipsis; /* To ensure long titles are truncated */
+  white-space: nowrap;
+  overflow: hidden;
+}
+
   
   .hot-topic-details p {
     font-size: 14px;

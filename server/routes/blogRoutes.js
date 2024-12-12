@@ -137,6 +137,65 @@ router.get('/blogs', async (req, res) => {
     return res.status(500).json({ error: 'Server error' });
   }
 });
-  
+
+/**
+ * @route   DELETE /api/blogs/:id
+ * @desc    Delete a blog by ID
+ */
+router.delete('/:id', async (req, res) => {
+  try {
+    const blogId = req.params.id; // Get the blog ID from URL params
+
+    // Attempt to find and delete the blog by ID
+    const deletedBlog = await Blog.findByIdAndDelete(blogId);
+
+    // If the blog with the given ID doesn't exist
+    if (!deletedBlog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+
+    // Return success response
+    res.status(200).json({ message: 'Blog deleted successfully', blog: deletedBlog });
+  } catch (error) {
+    console.error('Error deleting blog:', error);
+    res.status(500).json({
+      message: 'Server error while deleting blog',
+      error: error.message,
+    });
+  }
+});
+
+/**
+ * @route   PUT /api/blogs/:id
+ * @desc    Update a blog by ID
+ */
+router.put('/:id', async (req, res) => {
+  try {
+    const blogId = req.params.id; // Get the blog ID from URL params
+    const updatedData = req.body; // Get updated data from the request body
+
+    // Attempt to find and update the blog
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      blogId,
+      updatedData,
+      { new: true, runValidators: true } // Return the updated document and validate data
+    );
+
+    // If the blog with the given ID doesn't exist
+    if (!updatedBlog) {
+      return res.status(404).json({ message: 'Blog not found' });
+    }
+
+    // Return success response
+    res.status(200).json({ message: 'Blog updated successfully', blog: updatedBlog });
+  } catch (error) {
+    console.error('Error updating blog:', error);
+    res.status(500).json({
+      message: 'Server error while updating blog',
+      error: error.message,
+    });
+  }
+});
+
 
 export default router;
