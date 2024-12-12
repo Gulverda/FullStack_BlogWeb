@@ -7,6 +7,8 @@ import connectDB from "./configuration/dbConfig.js";
 import blogRoutes from "./routes/blogRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import User from "./models/User.js";
+import Blog from "./models/Blog.js";
+import path from "path";
 
 dotenv.config();
 
@@ -19,8 +21,8 @@ app.use(helmet());
 
 // Rate Limiting
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
   message: "Too many requests from this IP, please try again later.",
 });
 app.use(limiter);
@@ -42,14 +44,13 @@ const createAdminUser = async () => {
       console.log("Admin user already exists");
     }
   } catch (err) {
-    console.error(err.message);
+    console.error("Error during admin user creation:", err.message);
   }
 };
 
 // Connect to DB and then create Admin user
-const startServer = async () => {
-  try {
-    await connectDB(); // Ensure DB connection
+connectDB()
+  .then(async () => {
     await createAdminUser(); // Create the admin user after DB is connected
 
     // Routes
@@ -67,7 +68,7 @@ const startServer = async () => {
       });
     });
 
-    // Example for Express.js
+    // Example for Express.js to fetch posts by tag
     app.get("/api/blogs/:tag", async (req, res) => {
       const { tag } = req.params;
       try {
@@ -93,6 +94,20 @@ const startServer = async () => {
       });
     });
 
+    // Serve Frontend in Production
+    if (process.env.NODE_ENV === "production") {
+      const __dirname = path.resolve(); // Equivalent to __dirname in CommonJS
+
+      // Serve static files from the frontend/build directory
+      app.use(express.static(path.join(__dirname, "/frontend/build")));
+
+      // For any request that doesn't match an API route, send the React app's index.html
+      app.get("*", (req, res) => {
+        res.sendFile(path.join(__dirname, "frontend", "build", "index.html"));
+      });
+      
+    }
+
     // Start Server
     const PORT = process.env.PORT || 5000;
     app.listen(PORT, () => {
@@ -100,9 +115,7 @@ const startServer = async () => {
         console.log(`Server running on http://localhost:${PORT}`);
       }
     });
-  } catch (err) {
+  })
+  .catch((err) => {
     console.error("Error during server startup:", err.message);
-  }
-};
-
-startServer();
+  });
