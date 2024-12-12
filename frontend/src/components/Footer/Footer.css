@@ -63,6 +63,22 @@
   .footer-bottom a:hover {
     text-decoration: underline;
   }
+
+  .footer-column ul li a{
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .footer-categories{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .footer-categories a{
+    color: #fff;
+    text-decoration: none;
+  }
   
   @media (max-width: 768px) {
     .footer-bottom {

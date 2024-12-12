@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import "./Footer.css";
 
 const Footer = () => {
@@ -13,8 +14,9 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Navigation</h3>
           <ul>
-            <li>Home</li>
-            <li>Categories</li>
+            <li>        
+              <Link to="/" >Home</Link>
+            </li>
           </ul>
         </div>
         {/* <div className="footer-column">
@@ -24,14 +26,21 @@ const Footer = () => {
           <p>Australia</p>
         </div> */}
         <div className="footer-column">
-          <h3>Connections</h3>
-          <div className="footer-icons">
-            <i className="fab fa-facebook-f"></i>
-            <i className="fab fa-twitter"></i>
-            <i className="fab fa-youtube"></i>
-            <i className="fab fa-pinterest"></i>
-            <i className="fab fa-behance"></i>
-          </div>
+        <h3>Categories</h3>
+        <div className="footer-categories">
+        <Link to="/categories/technology">
+                Technology
+              </Link>
+              <Link to="/categories/science">
+                Science
+              </Link>
+              <Link to="/categories/sports">
+                Sports
+              </Link>
+              <Link to="/categories/entertainment">
+                Entertainment
+              </Link>
+        </div>
         </div>
       </div>
       <div className="footer-bottom">
