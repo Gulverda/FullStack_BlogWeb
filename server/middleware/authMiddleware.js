@@ -1,18 +1,19 @@
-import jwt from "jsonwebtoken";
-export const verifyToken = (req, res, next) => {
+import pkg from "jsonwebtoken";
+const { verify } = pkg; // Destructure verify from the CommonJS default export
+
+export default function authMiddleware(req, res, next) {
   const token = req.header("Authorization");
-  if (!token) return res.status(403).json({ message: "Access denied" });
+
+  if (!token) {
+    return res.status(401).json({ msg: "No token, authorization denied" });
+  }
+
   try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified;
+    const decoded = verify(token, process.env.JWT_SECRET); // Use verify here
+    req.user = decoded;
     next();
-  } catch (error) {
-    res.status(401).json({ message: "Invalid token" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(401).json({ msg: "Token is not valid" });
   }
-};
-export const isAdmin = (req, res, next) => {
-  if (req.user.role !== "admin") {
-    return res.status(403).json({ message: "Admin access required" });
-  }
-  next();
-};
+}
