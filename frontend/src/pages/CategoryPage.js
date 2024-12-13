@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";  // Use Link instead of <a>
 import '../components/BlogList.css';
 import { format } from 'date-fns';
 
@@ -41,8 +41,8 @@ const CategoryPage = () => {
               <img src={blog.image} alt={blog.title} />
               <h4>{blog.title}</h4>
               <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}</p>
-              {/* Fixed the href using template literals */}
-              <a href={`/blogs/${blog._id}`}>Read More</a>
+              {/* Use Link for client-side navigation */}
+              <Link to={`/blogs/${blog._id}`}>Read More</Link>
             </div>
           ))}
         </div>
