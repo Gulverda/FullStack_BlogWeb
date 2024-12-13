@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams, Link } from "react-router-dom";  // Use Link instead of <a>
+import { useParams } from "react-router-dom";
 import '../components/BlogList.css';
 import { format } from 'date-fns';
 
@@ -15,11 +15,14 @@ const CategoryPage = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(`${API_URL}/api/blogs/category/${category}`);
-        setBlogs(response.data); // Set the blogs if found
+        console.log(response.data); // Log to check the response structure
+        // Ensure the response data is an array
+        setBlogs(Array.isArray(response.data) ? response.data : []); 
         setError(null); // Reset error
       } catch (err) {
+        console.error("Error fetching blogs:", err); // Log error for debugging
         if (err.response && err.response.status === 404) {
-          setError(err.response.data.message); // Set "This category list is empty" error
+          setError("This category list is empty");
         } else {
           setError("An error occurred while fetching blogs.");
         }
@@ -34,20 +37,19 @@ const CategoryPage = () => {
       <h1>Category: {category.charAt(0).toUpperCase() + category.slice(1)}</h1>
       {error ? (
         <p>{error}</p> // Display error message
-      ) : blogs.length > 0 ? (
+      ) : Array.isArray(blogs) && blogs.length > 0 ? (
         <div className="latest-news-grid">
           {blogs.map((blog) => (
             <div key={blog._id} className="news-card">
               <img src={blog.image} alt={blog.title} />
               <h4>{blog.title}</h4>
               <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}</p>
-              {/* Use Link for client-side navigation */}
-              <Link to={`/blogs/${blog._id}`}>Read More</Link>
+              <a href={`/blogs/${blog._id}`}>Read More</a>
             </div>
           ))}
         </div>
       ) : (
-        <p>Loading...</p> // Loading state
+        <p>{blogs.length === 0 ? 'No blogs found' : 'Loading...'}</p>
       )}
     </div>
   );
