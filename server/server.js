@@ -80,13 +80,13 @@ connectDB()
 
     // Welcome Route (can be removed in production)
     app.get('/', (req, res) => {
-      // res.json({
-      //   message: 'Welcome to the Blog API',
-      //   endpoints: {
-      //     blogs: '/api/blogs',
-      //     auth: '/api/auth',
-      //   },
-      // });
+      res.json({
+        message: 'Welcome to the Blog API',
+        endpoints: {
+          blogs: '/api/blogs',
+          auth: '/api/auth',
+        },
+      });
     });
 
     // Serve Frontend in Production
