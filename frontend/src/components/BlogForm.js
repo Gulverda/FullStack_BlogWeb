@@ -3,6 +3,8 @@ import axios from 'axios';
 import './BlogForm.css';
 
 const BlogForm = () => {
+  const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
+
   const [blog, setBlog] = useState({
     title: '',
     content: [{ title: '', text: '', image: '' }], // Added title to content blocks
@@ -46,7 +48,7 @@ const BlogForm = () => {
     };
 
     try {
-      const response = await axios.post('http://localhost:5000/api/blogs', newBlog);
+      const response = await axios.post(`${API_URL}/api/blogs`, newBlog);
       console.log('Blog created:', response.data);
 
       // Reset form fields
