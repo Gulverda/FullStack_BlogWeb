@@ -9,7 +9,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import CategoryPage from './pages/CategoryPage';
 import TagPosts from './pages/TagPostsPage';
 import Footer from './components/Footer/Footer';
-import Login from './components/Login';
+import Login from './components/Login/Login';
 import { AuthProvider } from './context/AuthContext';
 import EditBlog from './components/EditBlog/EditBlog';
 

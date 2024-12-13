@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import '../components/BlogList.css';
 import { format } from 'date-fns';
-
 const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
 
 const CategoryPage = () => {
@@ -44,8 +43,8 @@ const CategoryPage = () => {
               <img src={blog.image} alt={blog.title} />
               <h4>{blog.title}</h4>
               <p>{format(new Date(blog.createdAt), 'yyyy-MM-dd')}</p>
-              <a href={`/blogs/${blog._id}`}>Read More</a>
-            </div>
+              <Link to={`/blogs/${blog._id}`}>Read More</Link>
+              </div>
           ))}
         </div>
       ) : (

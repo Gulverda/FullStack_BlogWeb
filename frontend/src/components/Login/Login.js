@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext'; // Import useAuth
+import { useAuth } from '../../context/AuthContext'; // Import useAuth
 
-  const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
+const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
 
 const Login = () => {
   const [email, setEmail] = useState('');

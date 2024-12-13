@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; // Hook to get URL params
 import { fetchPostsByTag } from '../api/blogs'; // Function to fetch posts by tag
 import { format } from 'date-fns'; // Library to format dates
+import { Link } from 'react-router-dom'; // Component to navigate between routes
 import './TagPostsPage.css';
 import '../components/BlogList.css';
 
@@ -49,7 +50,7 @@ const TagPosts = () => {
               <img src={post.image} alt={post.title} />
             <h4>{post.title}</h4>
             <p>{format(new Date(post.createdAt), 'yyyy-MM-dd')}</p>
-            <a href={`/blogs/${post._id}`}>Read More</a>
+            <Link to={`/blogs/${post._id}`}>Read More</Link>
             </div>
           );
         })}
