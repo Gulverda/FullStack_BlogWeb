@@ -26,6 +26,8 @@ const allowedOrigins = [
 
 // Middleware
 app.use(express.json());
+
+// CORS configuration to allow only specific origins
 app.use(
   cors({
     origin: allowedOrigins,
@@ -35,28 +37,31 @@ app.use(
 );
 
 // Configure Helmet with CSP
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"], // Default to only allow same-origin resources
-      imgSrc: ["'self'", 
-        "https://th.bing.com", 
-        "https://www.dailymercato.com",
-        "https://www.sportshub.com",
-        "https://media1.popsugar-assets.com",
-        "https://scitechdaily.com",
-        "https://cdn.futura-sciences.com",
-        "https://img.freepik.com",
-        "https://upload.wikimedia.org",
-        "https://archive.reactnative.dev",
-        "https://miro.medium.com",
-        "https://www.ml4devs.com",
-        "https://favtutor.com"
-      ], // Allow images from 'self' and Bing
-      scriptSrc: ["'self'", "https://www.google-analytics.com"], // Allow scripts from self and Google Analytics (example)
+app.use(
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        defaultSrc: ["'self'"],
+        imgSrc: [
+          "'self'",
+          'https://th.bing.com',
+          'https://www.dailymercato.com',
+          'https://www.sportshub.com',
+          'https://media1.popsugar-assets.com',
+          'https://scitechdaily.com',
+          'https://cdn.futura-sciences.com',
+          'https://img.freepik.com',
+          'https://upload.wikimedia.org',
+          'https://archive.reactnative.dev',
+          'https://miro.medium.com',
+          'https://www.ml4devs.com',
+          'https://favtutor.com',
+        ],
+        scriptSrc: ["'self'", 'https://www.google-analytics.com'],
+      },
     },
-  },
-}));
+  })
+);
 
 // Rate Limiting Setup
 const limiter = rateLimit({
@@ -65,12 +70,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.',
 });
 app.use(limiter);
-
-// Serve static files from the frontend/build directory
-if (process.env.NODE_ENV === 'development') {
-  console.log('Serving static files from:', path.join(__dirname, '../frontend/build'));
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-}
 
 // Function to create an admin user
 const createAdminUser = async () => {
@@ -93,6 +92,33 @@ const createAdminUser = async () => {
   }
 };
 
+// Serve static files from the frontend/build directory
+if (process.env.NODE_ENV === 'development') {
+  console.log('Serving static files from:', path.join(__dirname, '../frontend/build'));
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+}
+
+// Serve static files in production
+if (process.env.NODE_ENV === 'production') {
+  const frontendBuildPath = path.join(__dirname, '../frontend/build');
+  
+  // Serve static assets (JS, CSS, images) correctly
+  app.use(express.static(frontendBuildPath, {
+    setHeaders: (res, filePath) => {
+      if (filePath.endsWith('.js')) {
+        res.set('Content-Type', 'application/javascript');
+      } else if (filePath.endsWith('.css')) {
+        res.set('Content-Type', 'text/css');
+      }
+    }
+  }));
+
+  // Redirect all unknown routes to the frontend's index.html
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  });
+}
+
 // Connect to DB, create Admin user, and set up routes
 connectDB()
   .then(async () => {
@@ -112,17 +138,6 @@ connectDB()
             auth: '/api/auth',
           },
         });
-      });
-    }
-
-    // Serve Frontend in Production
-    if (process.env.NODE_ENV === 'production') {
-      const frontendBuildPath = path.join(__dirname, '../frontend/build');
-      app.use(express.static(frontendBuildPath));
-
-      // Redirect all unknown routes to the frontend's index.html
-      app.get('*', (req, res) => {
-        res.sendFile(path.join(frontendBuildPath, 'index.html'));
       });
     }
 
