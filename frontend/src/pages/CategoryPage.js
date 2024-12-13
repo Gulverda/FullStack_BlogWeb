@@ -4,12 +4,12 @@ import { useParams } from "react-router-dom";
 import '../components/BlogList.css';
 import { format } from 'date-fns';
 
+const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
+
 const CategoryPage = () => {
   const { category } = useParams(); // Get category from the URL
   const [blogs, setBlogs] = useState([]);
   const [error, setError] = useState(null);
-
-  const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
 
   useEffect(() => {
     const fetchBlogs = async () => {
@@ -30,7 +30,7 @@ const CategoryPage = () => {
     };
 
     fetchBlogs();
-  }, [category, API_URL]);
+  }, [category]);
 
   return (
     <div className="category" style={{ padding: "20px" }}>
