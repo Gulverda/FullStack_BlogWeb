@@ -24,7 +24,11 @@ const allowedOrigins = [
   'http://localhost:3000', // Local development
 ];
 
-console.log('Serving static files from:', path.join(__dirname, '..', 'frontend', 'build')); // Correct path
+// Serve static files from the frontend/build directory in both development and production
+if (process.env.NODE_ENV === 'development') {
+  console.log('Serving static files from:', path.join(__dirname, '../frontend/build'));
+  app.use(express.static(path.join(__dirname, '../frontend/build'))); 
+}
 
 // Middleware
 app.use(express.json());
@@ -67,13 +71,13 @@ const createAdminUser = async () => {
 // Connect to DB, create Admin user, and set up routes
 connectDB()
   .then(async () => {
-    await createAdminUser(); // Create the admin user after DB is connected
+    await createAdminUser();
 
     // Routes
     app.use('/api/blogs', blogRoutes);
     app.use('/api/auth', authRoutes);
 
-    // Welcome Route
+    // Welcome Route (can be removed in production)
     app.get('/', (req, res) => {
       res.json({
         message: 'Welcome to the Blog API',
@@ -86,12 +90,18 @@ connectDB()
 
     // Serve Frontend in Production
     if (process.env.NODE_ENV === 'production') {
-      const frontendBuildPath = path.join(__dirname, '..', 'frontend', 'build'); // Ensure correct path to build folder
-      app.use(express.static(frontendBuildPath)); // Serve static files
+      const frontendBuildPath = path.join(__dirname, '../frontend/build');
+      app.use(express.static(frontendBuildPath));
 
-      // For any request that doesn't match an API route, send the React app's index.html
+      // Redirect all unknown routes to the frontend's index.html
       app.get('*', (req, res) => {
-        res.sendFile(path.join(frontendBuildPath, 'index.html')); // Send the index.html
+        const filePath = path.join(frontendBuildPath, 'index.html');
+        // Adjust the following path if your backend is not on the root path
+        if (process.env.BACKEND_PATH) { // Check for an environment variable
+          res.sendFile(path.join(filePath, process.env.BACKEND_PATH));
+        } else {
+          res.sendFile(filePath);
+        }
       });
     }
 
