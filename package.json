@@ -1,18 +1,29 @@
 {
-  "name": "fullstack_blogweb",
+  "name": "registration",
   "version": "1.0.0",
-  "description": "��#\u0000 \u0000F\u0000u\u0000l\u0000l\u0000S\u0000t\u0000a\u0000c\u0000k\u0000_\u0000B\u0000l\u0000o\u0000g\u0000W\u0000e\u0000b\u0000",
-  "main": "index.js",
+  "main": "server/server.js",
+  "type": "module",
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/server.js",
+    "dev": "concurrently \"cross-env NODE_ENV=development nodemon server/server.js\" \"npm run start --prefix frontend\"",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "cross-env NODE_ENV=production node server/server.js"
   },
-  "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.8.2"
+  },
   "devDependencies": {
-    "cross-env": "^7.0.3"
+    "concurrently": "^9.1.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^3.1.7"
   }
 }

@@ -1,7 +1,6 @@
 // api/blogs.js
 import axios from "axios";
 
-// Base URL for your API, defaulting to localhost if not set
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const fetchBlogs = async () => {
