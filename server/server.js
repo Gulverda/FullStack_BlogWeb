@@ -11,7 +11,6 @@ import connectDB from './configuration/dbConfig.js';
 import blogRoutes from './routes/blogRoutes.js';
 import authRoutes from './routes/authRoutes.js';
 import User from './models/User.js';
-import Blog from './models/Blog.js';
 
 dotenv.config();
 
@@ -25,30 +24,32 @@ const allowedOrigins = [
   'https://fullstack-blogweb.onrender.com', // Render deployment
 ];
 
-// Serve static files from the frontend/build directory in both development and production
-if (process.env.NODE_ENV === 'development') {
-  console.log('Serving static files from:', path.join(__dirname, '../frontend/build'));
-  app.use(express.static(path.join(__dirname, '../frontend/build'))); 
-}
-
 // Middleware
 app.use(express.json());
-app.use(cors({
-  origin: allowedOrigins,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  credentials: true,
-}));
+app.use(
+  cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+  })
+);
 app.use(helmet());
 
 // Rate Limiting Setup
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
-  max: 100,
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per windowMs
   message: 'Too many requests from this IP, please try again later.',
 });
 app.use(limiter);
 
-// Create Admin User if it doesn't exist
+// Serve static files from the frontend/build directory
+if (process.env.NODE_ENV === 'development') {
+  console.log('Serving static files from:', path.join(__dirname, '../frontend/build'));
+  app.use(express.static(path.join(__dirname, '../frontend/build')));
+}
+
+// Function to create an admin user
 const createAdminUser = async () => {
   try {
     const adminExists = await User.findOne({ email: 'admin@example.com' });
@@ -74,20 +75,22 @@ connectDB()
   .then(async () => {
     await createAdminUser();
 
-    // Routes
+    // API Routes
     app.use('/api/blogs', blogRoutes);
     app.use('/api/auth', authRoutes);
 
-    // Welcome Route (can be removed in production)
-    app.get('/', (req, res) => {
-      res.json({
-        message: 'Welcome to the Blog API',
-        endpoints: {
-          blogs: '/api/blogs',
-          auth: '/api/auth',
-        },
+    // Welcome Route (only in development mode)
+    if (process.env.NODE_ENV === 'development') {
+      app.get('/', (req, res) => {
+        res.json({
+          message: 'Welcome to the Blog API',
+          endpoints: {
+            blogs: '/api/blogs',
+            auth: '/api/auth',
+          },
+        });
       });
-    });
+    }
 
     // Serve Frontend in Production
     if (process.env.NODE_ENV === 'production') {
@@ -96,13 +99,7 @@ connectDB()
 
       // Redirect all unknown routes to the frontend's index.html
       app.get('*', (req, res) => {
-        const filePath = path.join(frontendBuildPath, 'index.html');
-        // Adjust the following path if your backend is not on the root path
-        if (process.env.BACKEND_PATH) { // Check for an environment variable
-          res.sendFile(path.join(filePath, process.env.BACKEND_PATH));
-        } else {
-          res.sendFile(filePath);
-        }
+        res.sendFile(path.join(frontendBuildPath, 'index.html'));
       });
     }
 
