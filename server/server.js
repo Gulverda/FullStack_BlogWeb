@@ -22,6 +22,7 @@ const __dirname = dirname(__filename);
 const app = express();
 const allowedOrigins = [
   'http://localhost:3000', // Local development
+  'https://fullstack-blogweb.onrender.com', // Render deployment
 ];
 
 // Serve static files from the frontend/build directory in both development and production
