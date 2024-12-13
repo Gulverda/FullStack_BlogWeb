@@ -14,7 +14,7 @@ const CategoryPage = () => {
   useEffect(() => {
     const fetchBlogs = async () => {
       try {
-        const response = await axios.get(`${API_URL}/api/blogs/category/${category}`);
+        const response = await axios.get(`${API_URL}/blogs/category/${category}`);
         console.log(response.data); // Log to check the response structure
         // Ensure the response data is an array
         setBlogs(Array.isArray(response.data) ? response.data : []); 
