@@ -90,7 +90,6 @@ router.get("/category/:category", async (req, res) => {
   }
 });
 
-
 /**
  * @route   GET /api/blogs/tag/:tag
  * @desc    Fetch blogs by tag
@@ -114,9 +113,11 @@ router.get("/tag/:tag", async (req, res) => {
     }
   });
 
-
-  // Fetch related blogs based on tags
-router.get('/blogs', async (req, res) => {
+/**
+ * @route   GET /api/blogs/related
+ * @desc    Fetch related blogs based on tags
+ */
+router.get('/related', async (req, res) => {
   try {
     const { tags } = req.query;
     if (!tags) {
@@ -196,6 +197,5 @@ router.put('/:id', async (req, res) => {
     });
   }
 });
-
 
 export default router;

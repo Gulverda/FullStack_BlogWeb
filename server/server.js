@@ -34,12 +34,10 @@ app.use(
   })
 );
 
+// API Route (for example, blog data)
 app.get('/blogs/:id', (req, res) => {
   const blogId = req.params.id;
-  
-  // Instead of returning JSON, serve the index.html file from the build folder
-  const frontendBuildPath = path.join(__dirname, '../frontend/build');
-  res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  res.json({ message: `Blog with ID: ${blogId}` });
 });
 
 // Configure Helmet with CSP
@@ -47,20 +45,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"], // Default to only allow same-origin resources
-      imgSrc: ["'self'", 
-        "https://th.bing.com", 
-        "https://www.dailymercato.com",
-        "https://www.sportshub.com",
-        "https://media1.popsugar-assets.com",
-        "https://scitechdaily.com",
-        "https://cdn.futura-sciences.com",
-        "https://img.freepik.com",
-        "https://upload.wikimedia.org",
-        "https://archive.reactnative.dev",
-        "https://miro.medium.com",
-        "https://www.ml4devs.com",
-        "https://favtutor.com"
-      ], // Allow images from 'self' and Bing
+      imgSrc: ["'self'", "https://th.bing.com", "https://www.dailymercato.com", /* ... other sources */],
       scriptSrc: ["'self'", "https://www.google-analytics.com"], // Allow scripts from self and Google Analytics (example)
     },
   },
@@ -73,12 +58,6 @@ const limiter = rateLimit({
   message: 'Too many requests from this IP, please try again later.',
 });
 app.use(limiter);
-
-// Serve static files from the frontend/build directory
-if (process.env.NODE_ENV === 'development') {
-  console.log('Serving static files from:', path.join(__dirname, '../frontend/build'));
-  app.use(express.static(path.join(__dirname, '../frontend/build')));
-}
 
 // Function to create an admin user
 const createAdminUser = async () => {
@@ -110,25 +89,21 @@ connectDB()
     app.use('/api/blogs', blogRoutes);
     app.use('/api/auth', authRoutes);
 
-    // Welcome Route (only in development mode)
-    if (process.env.NODE_ENV === 'development') {
-      app.get('/', (req, res) => {
-        res.json({
-          message: 'Welcome to the Blog API',
-          endpoints: {
-            blogs: '/api/blogs',
-            auth: '/api/auth',
-          },
-        });
-      });
-    }
-
     // Serve Frontend in Production
     if (process.env.NODE_ENV === 'production') {
       const frontendBuildPath = path.join(__dirname, '../frontend/build');
       app.use(express.static(frontendBuildPath));
 
-      // Redirect all unknown routes to the frontend's index.html
+      // Serve index.html for any non-API routes, so React Router can take over
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(frontendBuildPath, 'index.html'));
+      });
+    }
+
+    // Serve Frontend in Development (if needed)
+    if (process.env.NODE_ENV === 'development') {
+      const frontendBuildPath = path.join(__dirname, '../frontend/build');
+      app.use(express.static(frontendBuildPath));
       app.get('*', (req, res) => {
         res.sendFile(path.join(frontendBuildPath, 'index.html'));
       });
