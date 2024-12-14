@@ -47,7 +47,18 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"], // Default to only allow same-origin resources
-      imgSrc: ["'self'", "https://th.bing.com", "https://www.dailymercato.com", /* ... other sources */],
+      imgSrc: ["'self'", "https://th.bing.com", 
+        "https://www.dailymercato.com",
+        "https://www.sportshub.com",
+        "https://media1.popsugar-assets.com",
+        "https://scitechdaily.com",
+        "https://cdn.futura-sciences.com",
+        "https://img.freepik.com",
+        "https://upload.wikimedia.org",
+        "https://archive.reactnative.dev",
+        "https://miro.medium.com",
+        "https://www.ml4devs.com",
+        "https://favtutor.com" /* ... other sources */],
       scriptSrc: ["'self'", "https://www.google-analytics.com"], // Allow scripts from self and Google Analytics (example)
     },
   },
