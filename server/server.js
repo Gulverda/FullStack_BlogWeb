@@ -35,10 +35,12 @@ app.use(
 );
 
 // API Route (for example, blog data)
+// Serve React index.html for /blogs/:id route
 app.get('/blogs/:id', (req, res) => {
-  const blogId = req.params.id;
-  res.json({ message: `Blog with ID: ${blogId}` });
+  const frontendBuildPath = path.join(__dirname, '../frontend/build');
+  res.sendFile(path.join(frontendBuildPath, 'index.html'));
 });
+
 
 // Configure Helmet with CSP
 app.use(helmet({
