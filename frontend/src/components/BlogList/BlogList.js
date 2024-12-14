@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchBlogs } from "../api/blogs";
+import { fetchBlogs } from "../../api/blogs";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
@@ -7,9 +7,9 @@ import { Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
 import "./BlogList.css";
-import SportBlogs from "./SportBlogs/SportBlogs";
-import ScienceBlogs from "./ScienceBlogs";
-import LoadingScreen from "./LoadingScreen/LoadingScreen";
+import SportBlogs from "../SportBlogs/SportBlogs";
+import ScienceBlogs from "../ScienceBlog/ScienceBlogs";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);

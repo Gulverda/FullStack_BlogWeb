@@ -1,5 +1,5 @@
 import React from "react";
-import BlogList from "../components/BlogList";
+import BlogList from "../components/BlogList/BlogList";
 // import Carousel from "../components/Carousel";
 
 const HomePage = () => (

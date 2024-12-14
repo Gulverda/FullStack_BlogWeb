@@ -1,13 +1,13 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Navbar from './components/Navbar';
+import Navbar from './components/NavBar/Navbar';
 import HomePage from './pages/HomePage';
 import AdminPage from './pages/AdminPage';
-import BlogDetails from './components/BlogDetails';
-import Blogs from './pages/BlogsPage';
-import NotFoundPage from './pages/NotFoundPage';
+import BlogDetails from './components/BlogDetails/BlogDetails';
+import Blogs from './pages/BlogsPage/BlogsPage';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
 import CategoryPage from './pages/CategoryPage';
-import TagPosts from './pages/TagPostsPage';
+import TagPosts from './pages/TagPostsPage/TagPostsPage';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import { AuthProvider } from './context/AuthContext';

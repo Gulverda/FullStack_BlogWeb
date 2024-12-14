@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams, Link } from "react-router-dom";
-import '../components/BlogList.css';
+import '../components/BlogList/BlogList.css';
 import { format } from 'date-fns';
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable

@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { fetchBlogById, fetchRelatedBlogs } from "../api/blogs"; // Adjusted import
+import { fetchBlogById, fetchRelatedBlogs } from "../../api/blogs"; // Adjusted import
 import "./BlogDetails.css";
 import { format } from "date-fns";
-import LoadingScreen from "./LoadingScreen/LoadingScreen";
+import LoadingScreen from "../LoadingScreen/LoadingScreen";
 
 const BlogDetails = () => {
   const { id } = useParams();

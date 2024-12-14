@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; // Hook to get URL params
-import { fetchPostsByTag } from '../api/blogs'; // Function to fetch posts by tag
+import { fetchPostsByTag } from '../../api/blogs'; // Function to fetch posts by tag
 import { format } from 'date-fns'; // Library to format dates
 import { Link } from 'react-router-dom'; // Component to navigate between routes
-import LoadingScreen from '../components/LoadingScreen/LoadingScreen';
+import LoadingScreen from '../../components/LoadingScreen/LoadingScreen';
 import './TagPostsPage.css';
-import '../components/BlogList.css';
+import '../../components/BlogList/BlogList.css';
 
 const TagPosts = () => {
   const [posts, setPosts] = useState([]); // State to store posts

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
-import { fetchBlogs } from "../api/blogs"; // Ensure fetchBlogs is correctly imported
+import { fetchBlogs } from "../../api/blogs"; // Ensure fetchBlogs is correctly imported
 import "./ScienceBlogs.css"; // Create this CSS file for custom styles
 
 const ScienceBlogs = () => {
