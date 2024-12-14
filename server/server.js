@@ -122,19 +122,19 @@ connectDB()
     }
 
     // Serve Frontend in Production
-    if (process.env.NODE_ENV === 'production') {
-      // Path to the build folder of the frontend React app
-      const frontendBuildPath = path.join(__dirname, '../frontend/build');
-      
-      // Serve static files (CSS, JS, images, etc.)
-      app.use('/blogs/static', express.static(path.join(frontendBuildPath, 'static')));
-    
-      // Serve the index.html for any unknown routes
-      app.get('*', (req, res) => {
-        res.sendFile(path.join(frontendBuildPath, 'index.html'));
-      });
-    }
-    
+   if (process.env.NODE_ENV === 'production') {
+  // Path to the build folder of the frontend React app
+  const frontendBuildPath = path.join(__dirname, '../frontend/build');
+  
+  // Serve static files (CSS, JS, images, etc.)
+  app.use('/blogs/static', express.static(path.join(frontendBuildPath, 'static')));
+
+  // Serve the index.html for any unknown routes
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(frontendBuildPath, 'index.html'));
+  });
+}
+
 
     // Start Server
     const PORT = process.env.PORT || 5000;
