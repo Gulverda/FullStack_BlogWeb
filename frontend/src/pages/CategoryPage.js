@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams, Link } from "react-router-dom";
 import '../components/BlogList.css';
 import { format } from 'date-fns';
+import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
 const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
 
 const CategoryPage = () => {
@@ -48,7 +49,7 @@ const CategoryPage = () => {
           ))}
         </div>
       ) : (
-        <p>{blogs.length === 0 ? 'No blogs found' : 'Loading...'}</p>
+        <div>{blogs.length === 0 ? <LoadingScreen /> : <LoadingScreen />}</div>
       )}
     </div>
   );

@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'; // Hook to get URL params
 import { fetchPostsByTag } from '../api/blogs'; // Function to fetch posts by tag
 import { format } from 'date-fns'; // Library to format dates
 import { Link } from 'react-router-dom'; // Component to navigate between routes
+import LoadingScreen from '../components/LoadingScreen/LoadingScreen';
 import './TagPostsPage.css';
 import '../components/BlogList.css';
 
@@ -30,7 +31,7 @@ const TagPosts = () => {
     getPostsByTag(); // Fetch posts whenever the component mounts or tag changes
   }, [tag]); // Re-fetch when the tag changes
 
-  if (loading) return <p>Loading...</p>; // Show loading message
+  if (loading) return <LoadingScreen />; // Show loading message
   if (error) return <p>{error}</p>; // Show error message if fetching fails
 
   // If no posts are found for the tag, show a message

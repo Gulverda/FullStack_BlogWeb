@@ -9,6 +9,7 @@ import "swiper/css/pagination";
 import "./BlogList.css";
 import SportBlogs from "./SportBlogs/SportBlogs";
 import ScienceBlogs from "./ScienceBlogs";
+import LoadingScreen from "./LoadingScreen/LoadingScreen";
 
 const BlogList = () => {
   const [blogs, setBlogs] = useState([]);
@@ -32,7 +33,7 @@ const BlogList = () => {
     getBlogs();
   }, []);
 
-  if (loading) return <p>Loading blogs...</p>;
+  if (loading) return <LoadingScreen />;
   if (blogs.length === 0) return <p>No blogs found.</p>;
 
   const hotTopics = blogs

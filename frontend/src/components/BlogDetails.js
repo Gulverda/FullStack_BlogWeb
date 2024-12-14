@@ -3,6 +3,7 @@ import { useParams, Link } from "react-router-dom";
 import { fetchBlogById, fetchRelatedBlogs } from "../api/blogs"; // Adjusted import
 import "./BlogDetails.css";
 import { format } from "date-fns";
+import LoadingScreen from "./LoadingScreen/LoadingScreen";
 
 const BlogDetails = () => {
   const { id } = useParams();
@@ -34,7 +35,7 @@ const BlogDetails = () => {
     getBlog();
   }, [id]); // Refetch data when the id changes
 
-  if (loading) return <div className="loading-spinner">Loading...</div>;
+  if (loading) return <LoadingScreen />;
   if (error) return <p>{error}</p>;
   if (!blog) return <p>No blog found</p>;
 
