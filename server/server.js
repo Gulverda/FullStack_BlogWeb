@@ -34,12 +34,14 @@ app.use(
   })
 );
 
-// API Route (for example, blog data)
 app.get('/blogs/:id', (req, res) => {
   const blogId = req.params.id;
+  
+  // Instead of returning JSON, serve the index.html file from the build folder
   const frontendBuildPath = path.join(__dirname, '../frontend/build');
   res.sendFile(path.join(frontendBuildPath, 'index.html'));
 });
+
 // Configure Helmet with CSP
 app.use(helmet({
   contentSecurityPolicy: {
@@ -122,19 +124,15 @@ connectDB()
     }
 
     // Serve Frontend in Production
-   if (process.env.NODE_ENV === 'production') {
-  // Path to the build folder of the frontend React app
-  const frontendBuildPath = path.join(__dirname, '../frontend/build');
-  
-  // Serve static files (CSS, JS, images, etc.)
-  app.use('/blogs/static', express.static(path.join(frontendBuildPath, 'static')));
+    if (process.env.NODE_ENV === 'production') {
+      const frontendBuildPath = path.join(__dirname, '../frontend/build');
+      app.use(express.static(frontendBuildPath));
 
-  // Serve the index.html for any unknown routes
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(frontendBuildPath, 'index.html'));
-  });
-}
-
+      // Redirect all unknown routes to the frontend's index.html
+      app.get('*', (req, res) => {
+        res.sendFile(path.join(frontendBuildPath, 'index.html'));
+      });
+    }
 
     // Start Server
     const PORT = process.env.PORT || 5000;
