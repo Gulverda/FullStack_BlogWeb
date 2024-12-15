@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { format } from "date-fns";
 import { Link } from "react-router-dom";
-import { fetchBlogs } from "../../api/blogs"; // Ensure fetchBlogs is correctly imported
-import "./ScienceBlogs.css"; // Create this CSS file for custom styles
+import { fetchBlogs } from "../../api/blogs"; 
+import "./ScienceBlogs.css"; 
 
 const ScienceBlogs = () => {
   const [scienceBlogs, setScienceBlogs] = useState([]);
@@ -23,11 +23,11 @@ const ScienceBlogs = () => {
       }
     };
 
-    getBlogs(); // Call the function to fetch blogs
+    getBlogs(); 
   }, []);
 
-  if (loading) return <p>Loading science news...</p>; // Display loading message
-  if (scienceBlogs.length === 0) return <p>No science news available.</p>; // Handle empty blogs
+  if (loading) return <p>Loading science news...</p>; 
+  if (scienceBlogs.length === 0) return <p>No science news available.</p>; 
 
   return (
     <div className="blogs-container">

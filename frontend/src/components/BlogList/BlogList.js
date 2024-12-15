@@ -92,8 +92,8 @@ const BlogList = () => {
           slidesPerView={1}
           pagination={{ clickable: true }}
           autoplay={{
-            delay: 3000, // 3 seconds per slide
-            disableOnInteraction: false, // Keep autoplay running even after user interaction
+            delay: 3000,
+            disableOnInteraction: false, 
           }}
           breakpoints={{
             640: {

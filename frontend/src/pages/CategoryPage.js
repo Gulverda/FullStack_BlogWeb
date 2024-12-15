@@ -4,10 +4,11 @@ import { useParams, Link } from "react-router-dom";
 import '../components/BlogList/BlogList.css';
 import { format } from 'date-fns';
 import LoadingScreen from "../components/LoadingScreen/LoadingScreen";
-const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
+
+const API_URL = process.env.REACT_APP_API_URL; 
 
 const CategoryPage = () => {
-  const { category } = useParams(); // Get category from the URL
+  const { category } = useParams(); 
   const [blogs, setBlogs] = useState([]);
   const [error, setError] = useState(null);
 
@@ -15,12 +16,12 @@ const CategoryPage = () => {
     const fetchBlogs = async () => {
       try {
         const response = await axios.get(`${API_URL}/blogs/category/${category}`);
-        console.log(response.data); // Log to check the response structure
-        // Ensure the response data is an array
+        // console.log(response.data); 
+
         setBlogs(Array.isArray(response.data) ? response.data : []); 
         setError(null); // Reset error
       } catch (err) {
-        console.error("Error fetching blogs:", err); // Log error for debugging
+        console.error("Error fetching blogs:", err); 
         if (err.response && err.response.status === 404) {
           setError("This category list is empty");
         } else {
@@ -36,7 +37,7 @@ const CategoryPage = () => {
     <div className="category" style={{ padding: "20px" }}>
       <h1>Category: {category.charAt(0).toUpperCase() + category.slice(1)}</h1>
       {error ? (
-        <p>{error}</p> // Display error message
+        <p>{error}</p>
       ) : Array.isArray(blogs) && blogs.length > 0 ? (
         <div className="latest-news-grid">
           {blogs.map((blog) => (

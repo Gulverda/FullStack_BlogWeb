@@ -1,5 +1,5 @@
 import pkg from "jsonwebtoken";
-const { verify } = pkg; // Destructure verify from the CommonJS default export
+const { verify } = pkg;
 
 export default function authMiddleware(req, res, next) {
   const token = req.header("Authorization");
@@ -9,7 +9,7 @@ export default function authMiddleware(req, res, next) {
   }
 
   try {
-    const decoded = verify(token, process.env.JWT_SECRET); // Use verify here
+    const decoded = verify(token, process.env.JWT_SECRET); 
     req.user = decoded;
     next();
   } catch (err) {

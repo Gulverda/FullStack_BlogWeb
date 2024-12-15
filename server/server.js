@@ -34,7 +34,6 @@ app.use(
   })
 );
 
-// API Route (for example, blog data)
 // Serve React index.html for /blogs/:id route
 app.get('/blogs/:id', (req, res) => {
   const frontendBuildPath = path.join(__dirname, '../frontend/build');
@@ -47,7 +46,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"], // Default to only allow same-origin resources
-      imgSrc: ["'self'", "https://th.bing.com", 
+      imgSrc: ["'self'", "https://th.bing.com",
         "https://www.dailymercato.com",
         "https://www.sportshub.com",
         "https://media1.popsugar-assets.com",
@@ -66,8 +65,8 @@ app.use(helmet({
 
 // Rate Limiting Setup
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Limit each IP to 100 requests per windowMs
+  windowMs: 15 * 60 * 1000,
+  max: 100,
   message: 'Too many requests from this IP, please try again later.',
 });
 app.use(limiter);

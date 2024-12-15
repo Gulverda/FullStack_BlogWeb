@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { fetchBlogById, updateBlog } from '../../api/blogs';
 
 const EditBlog = () => {
-  const { id } = useParams();  // Get the blog ID from the URL params
+  const { id } = useParams();  
   const navigate = useNavigate();
   const [blog, setBlog] = useState({
     title: '',
@@ -24,13 +24,13 @@ const EditBlog = () => {
           setBlog(fetchedBlog);  // Pre-fill form with existing data
         } else {
           alert('Blog not found!');
-          navigate('/admin');  // Redirect if blog not found
+          navigate('/admin'); 
         }
       } catch (error) {
         console.error('Error fetching blog:', error);
         alert('Failed to fetch blog details.');
       } finally {
-        setLoading(false);  // Set loading to false after fetch completes
+        setLoading(false); 
       }
     };
 
@@ -76,14 +76,13 @@ const EditBlog = () => {
     try {
       await updateBlog(id, blog);  // Update the blog with the modified data
       alert('Blog updated successfully!');
-      navigate('/admin');  // Redirect to admin page after successful update
+      navigate('/admin');  
     } catch (error) {
       console.error('Error updating blog:', error);
       alert('Failed to update blog. Please try again.');
     }
   };
 
-  // If loading, display a loading message
   if (loading) {
     return <div>Loading...</div>;
   }

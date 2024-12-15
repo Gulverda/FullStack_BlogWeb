@@ -3,11 +3,11 @@ import axios from 'axios';
 import './BlogForm.css';
 
 const BlogForm = () => {
-  const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
+  const API_URL = process.env.REACT_APP_API_URL; 
 
   const [blog, setBlog] = useState({
     title: '',
-    content: [{ title: '', text: '', image: '' }], // Added title to content blocks
+    content: [{ title: '', text: '', image: '' }],
     author: '',
     tags: '',
     image: '',

@@ -4,7 +4,7 @@ h1 {
 
 /* Form Container */
 form {
-    width: 100%;
+    width: 90%;
     max-width: 800px;
     margin: 50px auto;
     padding: 30px;
@@ -112,6 +112,7 @@ form div div label {
 }
 
 /* Responsive Design */
+/* Responsive Design */
 @media (max-width: 768px) {
     form {
         padding: 20px;
@@ -123,5 +124,56 @@ form div div label {
 
     form button[type="submit"] {
         font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 576px) {
+    form {
+        gap: 15px;
+    }
+
+    form h2 {
+        font-size: 1.3rem;
+    }
+
+    form input,
+    form textarea {
+        padding: 8px;
+        font-size: 0.9rem;
+    }
+
+    form button[type="submit"],
+    form button[type="button"] {
+        padding: 10px 14px;
+        font-size: 0.85rem;
+    }
+
+    form div div {
+        padding: 10px;
+    }
+}
+
+@media (max-width: 400px) {
+    form {
+        gap: 10px;
+    }
+
+    form h2 {
+        font-size: 1.1rem;
+    }
+
+    form input,
+    form textarea {
+        font-size: 0.8rem;
+    }
+
+    form button[type="submit"],
+    form button[type="button"] {
+        font-size: 0.8rem;
+        padding: 8px 12px;
+    }
+
+    form div div {
+        padding: 8px;
     }
 }

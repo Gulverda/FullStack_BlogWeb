@@ -8,17 +8,14 @@ const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
 
-  // Toggles the menu visibility
   const toggleMenu = () => {
     setIsMenuOpen((prevState) => !prevState);
   };
 
-  // Closes the menu when a link is clicked
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
 
-  // Manage body overflow when the menu is open or closed
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
 

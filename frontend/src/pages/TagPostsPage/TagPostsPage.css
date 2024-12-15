@@ -1,28 +1,28 @@
-.tag-posts{
+.tag-posts {
   padding: 20px;
 }
 
 .posts-list {
   padding-top: 20px;
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); /* Default to 4 columns */
-    gap: 20px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 1200px) {
+  .posts-list {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  @media (max-width: 1200px) {
-    .posts-list {
-      grid-template-columns: repeat(3, 1fr); /* 3 columns on medium screens */
-    }
+}
+
+@media (max-width: 900px) {
+  .posts-list {
+    grid-template-columns: repeat(2, 1fr);
   }
-  
-  @media (max-width: 900px) {
-    .posts-list {
-      grid-template-columns: repeat(2, 1fr); /* 2 columns on smaller screens */
-    }
+}
+
+@media (max-width: 600px) {
+  .posts-list {
+    grid-template-columns: 1fr;
   }
-  
-  @media (max-width: 600px) {
-    .posts-list {
-      grid-template-columns: 1fr; /* 1 column on very small screens */
-    }
-  }
+}

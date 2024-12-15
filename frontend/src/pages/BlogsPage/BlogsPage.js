@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { fetchBlogs } from "../../api/blogs";
 import { format } from "date-fns";
 import './BlogsPage.css';
+import LoadingScreen from "../../components/LoadingScreen/LoadingScreen";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
@@ -23,7 +24,7 @@ const Blogs = () => {
     getBlogs();
   }, []);
 
-  if (loading) return <div className="loading-spinner">Loading...</div>;
+  if (loading) return <LoadingScreen />;
   if (error) return <p>{error}</p>;
 
   return (
