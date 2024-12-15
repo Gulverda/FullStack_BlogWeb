@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../context/AuthContext'; // Import useAuth
+import { useAuth } from '../../context/AuthContext'; 
+import './Login.css';
 
 const API_URL = process.env.REACT_APP_API_URL; // Use the environment variable
 
@@ -67,9 +68,9 @@ const Login = () => {
         <button type="submit">Login</button>
       </form>
       {/* Optional: Add "Forgot Password" link */}
-      <p>
+      {/* <p>
         <a href="/forgot-password">Forgot Password?</a>
-      </p>
+      </p> */}
     </div>
   );
 };
