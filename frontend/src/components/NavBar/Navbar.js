@@ -22,7 +22,8 @@ const Navbar = () => {
     // Fetch categories dynamically
     const fetchCategories = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/categories");
+        const response = await axios.get("https://fullstack-blogweb.onrender.com/categories");
+        // const response = await axios.get("http://localhost:5000/categories");
         setCategories(response.data);
       } catch (error) {
         console.error("Error fetching categories:", error);
