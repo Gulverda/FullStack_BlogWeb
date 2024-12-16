@@ -50,7 +50,7 @@ This is a **FullStack Blog Web** application built using the **MERN Stack** (Mon
    Navigate to the backend directory and install the required dependencies:
 
    ```bash
-   cd backend
+   cd server
    npm install
 
 3. **ENV**
