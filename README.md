@@ -2,6 +2,9 @@
 
 This is a **FullStack Blog Web** application built using the **MERN Stack** (MongoDB, Express, React, Node.js). It is designed to allow **admin** users to authenticate and manage blog posts. The admin can create, read, update, and delete posts through a secure and modern interface.
 
+![Project](./cover.png)
+
+
 ## Features
 
 - **Admin Authentication**: Admin users are automatically generated and can log in to manage posts, with authentication secured using JWT (JSON Web Tokens). No registration page/component is provided, and admin credentials are pre-configured.
