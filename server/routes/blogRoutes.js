@@ -72,23 +72,43 @@ router.post('/', async (req, res) => {
   }
 });
 
-/**
- * @route   GET /api/blogs/category/:category
- * @desc    Fetch blogs by category
- */
-router.get("/category/:category", async (req, res) => {
+// /**
+//  * @route   GET /api/blogs/category/:category
+//  * @desc    Fetch blogs by category
+//  */
+// router.get("/category/:category", async (req, res) => {
+//   const { category } = req.params;
+//   try {
+//     const blogs = await Blog.find({ category: category });
+//     if (blogs.length === 0) {
+//       return res.status(404).json({ message: "This category list is empty" });
+//     }
+//     res.json(blogs);
+//   } catch (error) {
+//     console.error("Error fetching blogs by category:", error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// });
+
+router.get('/category/:category', async (req, res) => {
   const { category } = req.params;
   try {
-    const blogs = await Blog.find({ category: category });
-    if (blogs.length === 0) {
-      return res.status(404).json({ message: "This category list is empty" });
-    }
+    const blogs = await Blog.find({ category });
     res.json(blogs);
   } catch (error) {
-    console.error("Error fetching blogs by category:", error);
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ error: 'Failed to fetch blogs' });
   }
 });
+
+router.post('/api/categories', (req, res) => {
+  const { category } = req.body;
+  if (category && !categories.includes(category)) {
+    categories.push(category);
+    return res.status(201).json({ message: 'Category added successfully', categories });
+  }
+  return res.status(400).json({ message: 'Category already exists or invalid input' });
+});
+
 
 /**
  * @route   GET /api/blogs/tag/:tag

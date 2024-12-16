@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext"; // Import useAuth
+import axios from "axios";
 import "./Navbar.css";
 
 const Navbar = () => {
-  const { isLoggedIn, logout } = useAuth(); 
+  const { isLoggedIn, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [categories, setCategories] = useState([]);
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -15,6 +17,20 @@ const Navbar = () => {
   const closeMenu = () => {
     setIsMenuOpen(false);
   };
+
+  useEffect(() => {
+    // Fetch categories dynamically
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("http://localhost:5000/categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "auto";
@@ -51,18 +67,19 @@ const Navbar = () => {
         <div className="dropdown">
           <span className="dropdown-toggle">Categories</span>
           <div className="dropdown-menu">
-            <Link to="/categories/technology" onClick={closeMenu}>
-              Technology
-            </Link>
-            <Link to="/categories/science" onClick={closeMenu}>
-              Science
-            </Link>
-            <Link to="/categories/sports" onClick={closeMenu}>
-              Sports
-            </Link>
-            <Link to="/categories/entertainment" onClick={closeMenu}>
-              Entertainment
-            </Link>
+            {categories.length > 0 ? (
+              categories.map((category) => (
+                <Link
+                  to={`/categories/${category}`}
+                  key={category}
+                  onClick={closeMenu}
+                >
+                  {category}
+                </Link>
+              ))
+            ) : (
+              <p>Loading...</p>
+            )}
           </div>
         </div>
 

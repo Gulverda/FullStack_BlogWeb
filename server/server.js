@@ -10,6 +10,7 @@ import { dirname } from 'path';
 import connectDB from './configuration/dbConfig.js';
 import blogRoutes from './routes/blogRoutes.js';
 import authRoutes from './routes/authRoutes.js';
+import Blog from './models/Blog.js';
 import User from './models/User.js';
 
 dotenv.config();
@@ -39,6 +40,25 @@ app.get('/blogs/:id', (req, res) => {
   const frontendBuildPath = path.join(__dirname, '../frontend/build');
   res.sendFile(path.join(frontendBuildPath, 'index.html'));
 });
+
+app.get("/categories", async (req, res) => {
+  try {
+    const categories = await Blog.distinct("category");
+    res.json(categories);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch categories" });
+  }
+});
+
+// app.get("/blogs/:category", async (req, res) => {
+//   const { category } = req.params;
+//   try {
+//     const blogs = await Blog.find({ category });
+//     res.json(blogs);
+//   } catch (error) {
+//     res.status(500).json({ error: "Failed to fetch blogs" });
+//   }
+// });
 
 
 // Configure Helmet with CSP

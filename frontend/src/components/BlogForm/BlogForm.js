@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './BlogForm.css';
 
 const BlogForm = () => {
-  const API_URL = process.env.REACT_APP_API_URL; 
+  const API_URL = process.env.REACT_APP_API_URL;
 
   const [blog, setBlog] = useState({
     title: '',
@@ -11,8 +11,43 @@ const BlogForm = () => {
     author: '',
     tags: '',
     image: '',
-    category: '',
+    category: '', // Holds the selected category
   });
+
+  const [categories, setCategories] = useState([]); // Stores existing categories
+  const [newCategory, setNewCategory] = useState(''); // Holds new category input
+
+  // Fetch existing categories from the backend
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        // const response = await axios.get("http://localhost:5000/categories");
+        const response = await axios.get("https://fullstack-blogweb.onrender.com//categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error('Error fetching categories:', error);
+      }
+    };
+
+    fetchCategories();
+  }, [API_URL]);
+
+  // Handle category addition
+  const handleAddCategory = async () => {
+    if (newCategory && !categories.includes(newCategory)) {
+      try {
+        const response = await axios.post(`${API_URL}/api/categories`, {
+          category: newCategory,
+        });
+        setCategories(response.data.categories); // Update the category list after adding
+        setNewCategory(''); // Clear the input field
+      } catch (error) {
+        console.error('Error adding category:', error);
+      }
+    } else {
+      alert('Category already exists or is invalid');
+    }
+  };
 
   const handleChange = (e) => {
     setBlog({
@@ -42,13 +77,17 @@ const BlogForm = () => {
 
     const tagsArray = blog.tags.split(',').map((tag) => tag.trim());
 
+    // Use the new category if provided, otherwise use the selected category
+    const selectedCategory = newCategory ? newCategory : blog.category;
+
     const newBlog = {
       ...blog,
       tags: tagsArray,
+      category: selectedCategory,
     };
 
     try {
-      const response = await axios.post(`${API_URL}/api/blogs`, newBlog);
+      const response = await axios.post(`${API_URL}/blogs`, newBlog);
       console.log('Blog created:', response.data);
 
       // Reset form fields
@@ -60,6 +99,7 @@ const BlogForm = () => {
         image: '',
         category: '',
       });
+      setNewCategory('');
     } catch (error) {
       console.error('Error creating blog:', error);
     }
@@ -148,13 +188,29 @@ const BlogForm = () => {
       </div>
       <div>
         <label>Category:</label>
-        <input
-          type="text"
+        <select
           name="category"
           value={blog.category}
           onChange={handleChange}
-          required
+        >
+          <option value="">Select a Category</option>
+          {categories.map((cat, index) => (
+            <option key={index} value={cat}>
+              {cat}
+            </option>
+          ))}
+        </select>
+      </div>
+      <div>
+        <label>Or Add a New Category:</label>
+        <input
+          type="text"
+          value={newCategory}
+          onChange={(e) => setNewCategory(e.target.value)}
         />
+        <button type="button" onClick={handleAddCategory}>
+          Add Category
+        </button>
       </div>
       <button type="submit">Create Blog</button>
     </form>
