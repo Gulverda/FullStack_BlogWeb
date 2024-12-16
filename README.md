@@ -45,3 +45,34 @@ This is a **FullStack Blog Web** application built using the **MERN Stack** (Mon
    ```bash
    git clone https://github.com/Gulverda/FullStack_BlogWeb.git
    cd FullStack_BlogWeb
+
+2. **Set Up the Backend**:
+   Navigate to the backend directory and install the required dependencies:
+
+   ```bash
+   cd backend
+   npm install
+
+3. **ENV**
+   Create a .env file in the backend directory to store your environment variables (MongoDB URI and JWT secret)
+   ```bash
+   MONGODB_URI=mongodb://localhost:example/exampleDB
+   JWT_SECRET=your_jwt_secret_key
+
+
+3. **Install the frontend dependencies:**
+   ```bash
+   cd ../frontend
+   npm install
+
+4. **Run the backend and frontend servers**
+   For the backend (API server):
+   ```bash
+   cd backend
+   npm run dev
+   ```
+   For the frontend (React app):
+   ```bash
+   cd frontend
+   npm start
+
