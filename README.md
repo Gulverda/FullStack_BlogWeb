@@ -4,7 +4,7 @@ This is a **FullStack Blog Web** application built using the **MERN Stack** (Mon
 
 ## Features
 
-- **Admin Authentication**: Only admin users can sign up, log in, and manage posts, secured with JWT (JSON Web Tokens).
+- **Admin Authentication**: Admin users are automatically generated and can log in to manage posts, with authentication secured using JWT (JSON Web Tokens). No registration page/component is provided, and admin credentials are pre-configured.
 - **Blog Post Management**: Admin users can create, update, delete, and view blog posts, with full CRUD functionality.
 - **Responsive UI**: Built with React and CSS, ensuring a responsive, clean design on all devices.
 - **Image Carousel**: A dynamic image slider is implemented with **Swiper.js** to display featured posts or images.
