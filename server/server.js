@@ -71,6 +71,7 @@ app.use(helmet({
         "https://coredevsltd.com",
         "https://3.bp.blogspot.com",
         "https://www.globalvincitore.com",
+        "https://blog.ninja-squad.com"
       ],
       scriptSrc: ["'self'", "https://www.google-analytics.com"], // Allow scripts from self and Google Analytics (example)
     },
