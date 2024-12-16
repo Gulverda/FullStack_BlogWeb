@@ -71,11 +71,12 @@
     top: 100%;
     left: 0;
     background: #fff;
-    border: 1px solid #ddd;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* border: 1px solid #ddd; */
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
     display: none;
     flex-direction: column;
     padding: 10px 0;
+    z-index: 1;
 }
 
 .dropdown-menu a {

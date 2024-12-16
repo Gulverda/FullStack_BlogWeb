@@ -1,8 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./Footer.css";
 
 const Footer = () => {
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    // Fetch categories dynamically
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("https://fullstack-blogweb.onrender.com/categories");
+        // const response = await axios.get("http://localhost:5000/categories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    fetchCategories();
+  }, []);
+
   return (
     <footer className="footer">
       <div className="footer-content">
@@ -14,8 +32,8 @@ const Footer = () => {
         <div className="footer-column">
           <h3>Navigation</h3>
           <ul>
-            <li>        
-              <Link to="/" >Home</Link>
+            <li>
+              <Link to="/">Home</Link>
             </li>
           </ul>
         </div>
@@ -26,21 +44,18 @@ const Footer = () => {
           <p>Australia</p>
         </div> */}
         <div className="footer-column">
-        <h3>Categories</h3>
-        <div className="footer-categories">
-        <Link to="/categories/technology">
-                Technology
-              </Link>
-              <Link to="/categories/science">
-                Science
-              </Link>
-              <Link to="/categories/sports">
-                Sports
-              </Link>
-              <Link to="/categories/entertainment">
-                Entertainment
-              </Link>
-        </div>
+          <h3>Categories</h3>
+          <div className="footer-categories">
+            {categories.length > 0 ? (
+              categories.map((category) => (
+                <Link key={category} to={`/categories/${category}`}>
+                  {category.charAt(0).toUpperCase() + category.slice(1)}
+                </Link>
+              ))
+            ) : (
+              <p>Loading categories...</p>
+            )}
+          </div>
         </div>
       </div>
       <div className="footer-bottom">

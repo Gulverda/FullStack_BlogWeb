@@ -8,6 +8,7 @@ const Navbar = () => {
   const { isLoggedIn, logout } = useAuth();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [categories, setCategories] = useState([]);
+
   const navigate = useNavigate();
 
   const toggleMenu = () => {
@@ -19,7 +20,6 @@ const Navbar = () => {
   };
 
   useEffect(() => {
-    // Fetch categories dynamically
     const fetchCategories = async () => {
       try {
         const response = await axios.get("https://fullstack-blogweb.onrender.com/categories");

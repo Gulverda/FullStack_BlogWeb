@@ -50,17 +50,6 @@ app.get("/categories", async (req, res) => {
   }
 });
 
-// app.get("/blogs/:category", async (req, res) => {
-//   const { category } = req.params;
-//   try {
-//     const blogs = await Blog.find({ category });
-//     res.json(blogs);
-//   } catch (error) {
-//     res.status(500).json({ error: "Failed to fetch blogs" });
-//   }
-// });
-
-
 // Configure Helmet with CSP
 app.use(helmet({
   contentSecurityPolicy: {
@@ -77,7 +66,12 @@ app.use(helmet({
         "https://archive.reactnative.dev",
         "https://miro.medium.com",
         "https://www.ml4devs.com",
-        "https://favtutor.com" /* ... other sources */],
+        "https://favtutor.com",
+        "https://www.simplilearn.com",
+        "https://coredevsltd.com",
+        "https://3.bp.blogspot.com",
+        "https://www.globalvincitore.com",
+      ],
       scriptSrc: ["'self'", "https://www.google-analytics.com"], // Allow scripts from self and Google Analytics (example)
     },
   },
